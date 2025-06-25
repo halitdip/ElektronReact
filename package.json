@@ -6,12 +6,11 @@
     "react:start": "webpack serve --mode=development --hot",
     "build-renderer": "webpack --mode=production",
     "start:dev": "concurrently -k --handle-input \"npm run react:start\" \"wait-on http://localhost:8080 && cross-env ELECTRON_START_URL=http://localhost:8080 electron .\"",
-    "start": "npm run build-renderer && electron ."
+    "start": "npm run build-renderer && electron .",
+    "dist:linux": "npm run build-renderer && electron-builder --linux",
+    "dist:windows": "npm run build-renderer && electron-builder --win",
+     "dist":       "npm run build-renderer && electron-builder"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@babel/core": "^7.27.4",
     "@babel/preset-env": "^7.27.2",
@@ -34,8 +33,33 @@
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "electron": "^37.0.0",
+    "electron-builder": "^24.13.3",
     "style-loader": "^4.0.0",
     "typescript": "^5.8.3",
     "webpack-dev-server": "^5.2.2"
+  },
+  "build": {
+    "appId": "com.mycompany.myapp",
+    "productName": "MyElectronApp",
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    },
+    "win": {
+     "target": [
+       "nsis"
+     ]
+   }
   }
 }
