@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function Info() {
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Bilgiler</h2>
+    <div >
+      <b>Bilgiler</b>
       <p>Buraya bazi bilgilendirici metinler eklenebilir.</p>
     </div>
   );

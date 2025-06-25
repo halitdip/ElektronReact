@@ -7,11 +7,14 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'renderer.js',
-    // Assets’in ve index.html’in kök dizinden (/) sunulması için
-    publicPath: '/',
+    publicPath: '/',                 // Base path for assets in dev
+    assetModuleFilename: 'images/[hash][ext][query]',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx'],      
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   module: {
     rules: [
@@ -20,6 +23,17 @@ module.exports = {
         exclude: /node_modules/,
         use: 'babel-loader',
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[hash][ext][query]'
+        }
+      }
     ],
   },
   plugins: [
@@ -28,8 +42,9 @@ module.exports = {
     }),
   ],
   devServer: {
-    // webpack-dev-server already serves files from memory. Removing static
-    // config avoids double responses that caused "Can't set headers" errors.
+    static: {
+      directory: path.join(__dirname, 'public'),  // serve index.html
+    },
     compress: true,
     port: 8080,
     hot: true,
