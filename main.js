@@ -13,8 +13,10 @@ function createWindow() {
 
   if (process.env.ELECTRON_START_URL) {
     win.loadURL(process.env.ELECTRON_START_URL);
-    // Geliştirme modunda DevTools açılır:
-    win.webContents.openDevTools({ mode: 'detach' });
+    // Sadece DEBUG degiskeni tanimlandiysa gelistirme araclari acilsin
+    if (process.env.DEBUG) {
+      win.webContents.openDevTools({ mode: 'detach' });
+    }
   } else {
     win.loadFile(path.join(__dirname, 'dist/index.html'));
   }
