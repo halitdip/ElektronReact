@@ -1,7 +1,9 @@
 # ElektronReact
 
-Bu proje basit bir Electron ve React entegrasyonunu gosterir. `shadcn-ui`
-kutuphanesi (>=0.3) kullanilarak hamburger menusu ve sayfa gecisleri saglanmistir.
+Bu proje basit bir Electron ve React entegrasyonunu gosterir. Arayuz
+elemanlari icin guncel ve yaygin bir kutuphane olan **MUI** (`@mui/material`)
+kullanilmaktadir. Hamburger menusu ve sayfa gecisleri bu kutuphane yardimiyla
+saglanmistir.
 `react-router-dom` ile coklu sayfa yapisi olusturulmustur.
 
 Uygulamayi calistirmak icin:
