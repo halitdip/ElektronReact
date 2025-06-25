@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Button from './components/Button';
+import Button from '@mui/material/Button';
 
 import Home from './pages/Home';
 import About from './pages/About';
