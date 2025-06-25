@@ -28,10 +28,6 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: {
-      // public/ klasöründeki sabit dosyaları (index.html) sun
-      directory: path.join(__dirname, 'public'),
-    },
     compress: true,
     port: 8080,
     hot: true,
