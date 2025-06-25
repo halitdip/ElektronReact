@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'renderer.js',
-    publicPath: './',                 // Base path for assets in dev
+    publicPath: '/',                 // Base path for assets
     assetModuleFilename: 'images/[hash][ext][query]',
   },
   resolve: {
