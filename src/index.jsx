@@ -1,7 +1,7 @@
 // src/index.jsx
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,7 +23,7 @@ function App() {
         }
       }} />
 
-      <BrowserRouter>
+      <HashRouter>
         <div style={{
           display: 'flex',
           height: '100vh',
@@ -42,7 +42,7 @@ function App() {
             </Routes>
           </div>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   );
 }
