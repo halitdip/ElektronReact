@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'shadcn-ui';
+import Button from './Button';
 
 const menuStyle = {
   position: 'fixed',

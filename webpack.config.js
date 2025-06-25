@@ -28,10 +28,8 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: {
-      // public/ klasöründeki sabit dosyaları (index.html) sun
-      directory: path.join(__dirname, 'public'),
-    },
+    // webpack-dev-server already serves files from memory. Removing static
+    // config avoids double responses that caused "Can't set headers" errors.
     compress: true,
     port: 8080,
     hot: true,
