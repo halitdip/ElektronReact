@@ -7,7 +7,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'renderer.js',
-    publicPath: '/',                 // Base path for assets
+    // Use absolute path in dev server and relative path in production so
+    // packaged builds load assets correctly from the filesystem
+    publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
     assetModuleFilename: 'images/[hash][ext][query]',
   },
   resolve: {
@@ -42,9 +44,10 @@ module.exports = {
     }),
   ],
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'public'),  // serve index.html
-    },
+    // Let webpack-dev-server serve files from memory only. The template
+    // is handled by HtmlWebpackPlugin, so serving the public folder is
+    // unnecessary and can cause duplicate responses.
+    static: false,
     compress: true,
     port: 8080,
     hot: true,
