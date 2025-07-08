@@ -1,6 +1,5 @@
 import React from 'react';
-const { exec } = window.require('child_process');
-const os = window.require('os');
+import usePowerActions from '@/hooks/usePowerActions';
 import { NavLink } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -55,50 +54,7 @@ const ActionButton = styled(Box)(({ theme }) => ({
 
 export default function TopNav() {
   const theme = useTheme();
-
-  // Fonksiyonlar
-  const handleShutdown = () => {
-    const platform = os.platform();
-    let cmd;
-    if (platform === 'win32') {
-      cmd = 'shutdown /s /t 0';
-    } else if (platform === 'darwin') {
-      cmd = "osascript -e 'tell app \"System Events\" to shut down'";
-    } else {
-      cmd = 'shutdown -h now';
-    }
-    exec(cmd, err => {
-      if (err) console.error('Shutdown failed:', err);
-    });
-  };
-  const handleRestart = () => {
-    const platform = os.platform();
-    let cmd;
-    if (platform === 'win32') {
-      cmd = 'shutdown /r /t 0';
-    } else if (platform === 'darwin') {
-      cmd = "osascript -e 'tell app \"System Events\" to restart'";
-    } else {
-      cmd = 'shutdown -r now';
-    }
-    exec(cmd, err => {
-      if (err) console.error('Restart failed:', err);
-    });
-  };
-  const handleSwitchUser = () => {
-    const platform = os.platform();
-    let cmd;
-    if (platform === 'win32') {
-      cmd = 'tsdiscon';
-    } else if (platform === 'darwin') {
-      cmd = '/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend';
-    } else {
-      cmd = 'dm-tool switch-to-greeter';
-    }
-    exec(cmd, err => {
-      if (err) console.error('Switch user failed:', err);
-    });
-  };
+  const { handleShutdown, handleRestart, handleSwitchUser } = usePowerActions();
   const handleRefresh = () => {
     window.location.reload();
   };
