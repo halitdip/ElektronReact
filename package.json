@@ -1,0 +1,73 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "react:start": "webpack serve --mode=development --hot",
+    "build-renderer": "cross-env NODE_ENV=production webpack --mode=production",
+    "start:dev": "concurrently -k --handle-input \"npm run react:start\" \"wait-on http://localhost:8080 && cross-env ELECTRON_START_URL=http://localhost:8080 electron .\"",
+    "start": "npm run build-renderer && electron .",
+    "dist:linux": "npm run build-renderer && electron-builder --linux",
+    "dist:windows": "npm run build-renderer && electron-builder --win",
+    "dist": "npm run build-renderer && electron-builder"
+  },
+  "dependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.1.2",
+    "@mui/material": "^7.1.2",
+    "babel-loader": "^10.0.0",
+    "concurrently": "^9.2.0",
+    "html-webpack-plugin": "^5.6.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^6.22.2",
+    "wait-on": "^8.0.3",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^13.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^7.1.2",
+    "electron": "^37.0.0",
+    "electron-builder": "^24.13.3",
+    "style-loader": "^4.0.0",
+    "typescript": "^5.8.3",
+    "webpack-dev-server": "^5.2.2"
+  }, 
+  "build": {
+    "asar": true,
+    "appId": "com.mycompany.myapp",
+    "productName": "MyElectronApp",
+    "directories": {
+      "buildResources": "src/assets/img"
+    },
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "package.json"
+    ],
+    "icon": "a-101-logo.ico",
+    "win": {
+      "target": ["nsis"],
+      "icon": "a-101-logo.ico"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "a-101-logo.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "a-101-logo.ico",
+      "uninstallerIcon": "a-101-logo.ico",
+      "installerHeaderIcon": "a-101-logo.ico"
+    }
+  }
+}
