@@ -38,9 +38,23 @@ export default function usePowerActions() {
     });
   };
 
-  const handleShutdown = () => runCommand(getPowerCommand('shutdown'));
-  const handleRestart = () => runCommand(getPowerCommand('restart'));
-  const handleSwitchUser = () => runCommand(getPowerCommand('switchUser'));
+  const handleShutdown = () => {
+    if (window.confirm('Bilgisayarı kapatmak istediğinize emin misiniz?')) {
+      runCommand(getPowerCommand('shutdown'));
+    }
+  };
+
+  const handleRestart = () => {
+    if (window.confirm('Bilgisayarı yeniden başlatmak istediğinize emin misiniz?')) {
+      runCommand(getPowerCommand('restart'));
+    }
+  };
+
+  const handleSwitchUser = () => {
+    if (window.confirm('Kullanıcı değiştirmek istediğinize emin misiniz?')) {
+      runCommand(getPowerCommand('switchUser'));
+    }
+  };
 
   return { handleShutdown, handleRestart, handleSwitchUser };
 }
