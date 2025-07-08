@@ -1,4 +1,6 @@
 import React from 'react';
+const { exec } = window.require('child_process');
+const os = window.require('os');
 import { NavLink } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -49,23 +51,53 @@ const ActionButton = styled(Box)(({ theme }) => ({
   '&:hover': {
     color: '#AAE8F0',
   },
-}));a
+}));
 
 export default function TopNav() {
   const theme = useTheme();
 
   // Fonksiyonlar
   const handleShutdown = () => {
-    alert('Bilgisayar kapatılıyor... (Simülasyon)');
-    // Gerçek bilgisayar kapatma webden yapılamaz.
+    const platform = os.platform();
+    let cmd;
+    if (platform === 'win32') {
+      cmd = 'shutdown /s /t 0';
+    } else if (platform === 'darwin') {
+      cmd = "osascript -e 'tell app \"System Events\" to shut down'";
+    } else {
+      cmd = 'shutdown -h now';
+    }
+    exec(cmd, err => {
+      if (err) console.error('Shutdown failed:', err);
+    });
   };
   const handleRestart = () => {
-    alert('Bilgisayar yeniden başlatılıyor... (Simülasyon)');
-    // Gerçek yeniden başlatma yapılamaz.
+    const platform = os.platform();
+    let cmd;
+    if (platform === 'win32') {
+      cmd = 'shutdown /r /t 0';
+    } else if (platform === 'darwin') {
+      cmd = "osascript -e 'tell app \"System Events\" to restart'";
+    } else {
+      cmd = 'shutdown -r now';
+    }
+    exec(cmd, err => {
+      if (err) console.error('Restart failed:', err);
+    });
   };
   const handleSwitchUser = () => {
-    alert('Kullanıcı değiştirme ekranı açılıyor... (Simülasyon)');
-    // Gerçek kullanıcı değiştirme webden yapılamaz.
+    const platform = os.platform();
+    let cmd;
+    if (platform === 'win32') {
+      cmd = 'tsdiscon';
+    } else if (platform === 'darwin') {
+      cmd = '/System/Library/CoreServices/Menu\\ Extras/User.menu/Contents/Resources/CGSession -suspend';
+    } else {
+      cmd = 'dm-tool switch-to-greeter';
+    }
+    exec(cmd, err => {
+      if (err) console.error('Switch user failed:', err);
+    });
   };
   const handleRefresh = () => {
     window.location.reload();
