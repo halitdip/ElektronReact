@@ -8,9 +8,9 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import HomeIcon from '@mui/icons-material/Home';
+/* import HomeIcon from '@mui/icons-material/Home';
 import UpdateIcon from '@mui/icons-material/Update';
-import ListIcon from '@mui/icons-material/List';
+import ListIcon from '@mui/icons-material/List'; */
 
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -36,7 +36,7 @@ const NavItem = styled(NavLink)(({ theme }) => ({
 
 const ActionBox = styled(Box)(({ theme }) => ({
   display: 'flex',
-  gap: theme.spacing(3),
+  gap: theme.spacing(2),
   alignItems: 'center',
 }));
 
@@ -87,7 +87,7 @@ export default function TopNav() {
         </IconButton>
 
         {/* Menü Öğeleri */}
-        <Box sx={{ display: 'flex' }}>
+        {/* <Box sx={{ display: 'flex' }}>
           <NavItem to="/">
             <IconButton size="small" color="inherit">
               <HomeIcon fontSize="small" />
@@ -121,21 +121,15 @@ export default function TopNav() {
               Bilgiler
             </Typography>
           </NavItem>
-        </Box>
+        </Box> */}
 
         {/* Sağdaki İşlem Butonları */}
         <ActionBox>
-          <ActionButton onClick={handleShutdown}>
+          <ActionButton onClick={handleRefresh}>
             <IconButton size="large" color="inherit">
-              <PowerSettingsNewIcon />
+              <RefreshIcon />
             </IconButton>
-            <Typography variant="caption">Kapat</Typography>
-          </ActionButton>
-          <ActionButton onClick={handleRestart}>
-            <IconButton size="large" color="inherit">
-              <RestartAltIcon />
-            </IconButton>
-            <Typography variant="caption">Yeniden Başlat</Typography>
+            <Typography variant="caption">Ekranı Yenile</Typography>
           </ActionButton>
           <ActionButton onClick={handleSwitchUser}>
             <IconButton size="large" color="inherit">
@@ -143,11 +137,18 @@ export default function TopNav() {
             </IconButton>
             <Typography variant="caption">Kullanıcı Değiştir</Typography>
           </ActionButton>
-          <ActionButton onClick={handleRefresh}>
+          <ActionButton onClick={handleRestart}>
             <IconButton size="large" color="inherit">
-              <RefreshIcon />
+              <RestartAltIcon />
             </IconButton>
-            <Typography variant="caption">Yenile</Typography>
+            <Typography variant="caption">Yeniden Başlat</Typography>
+          </ActionButton>
+
+          <ActionButton onClick={handleShutdown}>
+            <IconButton size="large" style={{ color: 'red' }}>
+              <PowerSettingsNewIcon />
+            </IconButton>
+            <Typography variant="caption" style={{ color: 'red', fontWeight: 'bold' }}>Kapat</Typography>
           </ActionButton>
         </ActionBox>
       </Toolbar>
