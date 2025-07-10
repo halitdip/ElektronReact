@@ -20,14 +20,6 @@ import {
   keyframes
 } from '@mui/material';
 import {
-  Home,
-  ShoppingCart,
-  MenuBook,
-  Event,
-  Fingerprint,
-  HelpOutline,
-  Folder,
-  AllInbox,
   Notifications,
   Screenshot,
   Email,
@@ -61,17 +53,7 @@ const sliderContent = [
   }
 ];
 
-// Uygulama kısayolları
-const appShortcuts = [
-  { text: 'Mağaza Otomasyon', icon: <ShoppingCart sx={{ fontSize: 40, color: '#fff' }} />, color: '#E53935' },
-  { text: 'Kurumsal Portal', icon: <Home sx={{ fontSize: 40, color: '#fff' }} />, color: '#FB8C00' },
-  { text: 'POS Kasa Raporları', icon: <AllInbox sx={{ fontSize: 40, color: '#fff' }} />, color: '#43A047' },
-  { text: 'Eğitim Portalı', icon: <MenuBook sx={{ fontSize: 40, color: '#fff' }} />, color: '#1E88E5' },
-  { text: 'Kurban Kayıt Sistemi', icon: <Event sx={{ fontSize: 40, color: '#fff' }} />, color: '#8E24AA' },
-  { text: 'PUANTAJ', icon: <Fingerprint sx={{ fontSize: 40, color: '#fff' }} />, color: '#00897B' },
-  { text: 'Yardım Masası', icon: <HelpOutline sx={{ fontSize: 40, color: '#fff' }} />, color: '#546E7A' },
-  { text: 'Mağaza Klasörü', icon: <Folder sx={{ fontSize: 40, color: '#fff' }} />, color: '#3949AB' },
-];
+// Uygulama kısayolları API'den yüklenecek
 
 // Kaydırılabilir duyuru paneli için daha fazla veri
 const announcements = [
@@ -120,6 +102,7 @@ const fadeIn = keyframes`
 export default function A101KioskDashboard() {
   const currentDate = new Date('2025-07-02T09:08:00');
   const [activeSlide, setActiveSlide] = useState(0);
+  const [appShortcuts, setAppShortcuts] = useState([]);
 
   // Slider'ı manuel olarak değiştiren fonksiyonlar
   const handleNextSlide = () => {
@@ -131,11 +114,16 @@ export default function A101KioskDashboard() {
   };
 
   const getShortcuts = async () => {
-    const getShortcuts = await GetNewShortcuts(9900);
-    console.log(getShortcuts);
-  }
+    try {
+      const response = await GetNewShortcuts(9900);
+      setAppShortcuts(response?.shortcuts?.data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    getShortcuts()
+    getShortcuts();
   }, []);
 
   return (
@@ -206,12 +194,12 @@ export default function A101KioskDashboard() {
 
               {/* Uygulama Kısayolları: Slider tam satırı kapladığı için bunlar otomatik olarak alt satıra geçer. */}
               {appShortcuts.map((app) => (
-                <Grid item xs={6} sm={4} md={3} key={app.text}>
+                <Grid item xs={6} sm={4} md={3} key={app.id}>
                   <Card
                     elevation={2}
                     sx={{
                       textAlign: 'center',
-                      backgroundColor: app.color,
+                      backgroundColor: app.bgColor || '#3949AB',
                       color: 'white',
                       height: '100%',
                       display: 'flex',
@@ -222,9 +210,9 @@ export default function A101KioskDashboard() {
                     }}
                   >
                     <CardContent>
-                      {app.icon}
+                      <img src={app.iconUrl} alt={app.name} style={{ width: 40, height: 40 }} />
                       <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mt: 1 }}>
-                        {app.text}
+                        {app.name}
                       </Typography>
                     </CardContent>
                   </Card>
@@ -307,3 +295,4 @@ export default function A101KioskDashboard() {
     </Box>
   );
 }
+
