@@ -103,6 +103,12 @@ export default function A101KioskDashboard() {
   const currentDate = new Date('2025-07-02T09:08:00');
   const [activeSlide, setActiveSlide] = useState(0);
   const [appShortcuts, setAppShortcuts] = useState([]);
+  const bottomMenuShortcuts = appShortcuts.filter(
+    s => String(s.bottomMenu).toLowerCase() === 'true'
+  );
+  const gridShortcuts = appShortcuts.filter(
+    s => String(s.bottomMenu).toLowerCase() !== 'true'
+  );
 
   // Slider'ı manuel olarak değiştiren fonksiyonlar
   const handleNextSlide = () => {
@@ -193,7 +199,7 @@ export default function A101KioskDashboard() {
               </Grid>
 
               {/* Uygulama Kısayolları: Slider tam satırı kapladığı için bunlar otomatik olarak alt satıra geçer. */}
-              {appShortcuts.map((app) => (
+              {gridShortcuts.map((app) => (
                 <Grid item xs={6} sm={4} md={3} key={app.id}>
                   <Card
                     elevation={2}
@@ -288,6 +294,12 @@ export default function A101KioskDashboard() {
             <IconButton key={item.text} sx={{ flexDirection: 'column', color: '#333', borderRadius: 2, p: 1 }}>
               {item.icon}
               <Typography variant="caption" sx={{ fontSize: '0.6rem', mt: 0.5 }}>{item.text}</Typography>
+            </IconButton>
+          ))}
+          {bottomMenuShortcuts.map(app => (
+            <IconButton key={app.id} sx={{ flexDirection: 'column', color: '#333', borderRadius: 2, p: 1 }}>
+              <img src={app.iconUrl} alt={app.name} style={{ width: 24, height: 24 }} />
+              <Typography variant="caption" sx={{ fontSize: '0.6rem', mt: 0.5 }}>{app.name}</Typography>
             </IconButton>
           ))}
         </Toolbar>
