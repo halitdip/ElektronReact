@@ -38,12 +38,10 @@ export default async function UniterApiService(
 
         const headers = {
             'Content-Type': 'application/json',
-        };
-        console.log("tokennnn", token)
+        }; 
         if (security === 1 && token) {
             headers.Authorization = `Bearer ${token}`;
-        }
-        console.log(fullURL)
+        }  
         // Axios isteği
         const response = await axios({
             method: method,
