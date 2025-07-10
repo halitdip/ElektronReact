@@ -5,7 +5,7 @@ import {
   Box,
   Card,
   CardContent,
-  CssBaseline,
+  Button,
   Grid,
   IconButton,
   List,
@@ -75,15 +75,6 @@ const announcements = [
   { id: '8', text: 'Bayram temizliği planlaması', date: '2025-06-30T14:22:05' },
 ];
 
-// Alt dock ikonları
-const dockItems = [
-  { text: 'Ekran Alıntısı', icon: <Screenshot /> },
-  { text: 'e-Posta', icon: <Email /> },
-  { text: 'Spark', icon: <FlashOn /> },
-  { text: 'Güvenlik', icon: <Security /> },
-  { text: 'Mağaza Terminal', icon: <Computer /> },
-  { text: 'Terminal Güncelle', icon: <Settings /> },
-];
 
 // Animasyon için Keyframes
 const fadeIn = keyframes`
@@ -100,7 +91,7 @@ const fadeIn = keyframes`
 
 // Ana Bileşen
 export default function A101KioskDashboard() {
-  const currentDate = new Date('2025-07-02T09:08:00');
+
   const [activeSlide, setActiveSlide] = useState(0);
   const [appShortcuts, setAppShortcuts] = useState([]);
   const bottomMenuShortcuts = appShortcuts.filter(
@@ -161,11 +152,11 @@ export default function A101KioskDashboard() {
         <Grid container spacing={3} sx={{ height: '100%' }}>
 
           {/* Sol Panel (Slider ve Kısayollar) - 8 birim */}
-          <Grid item size={8}>
+          <Grid size={8}>
             <Grid container spacing={3}>
 
               {/* Slider Banner: xs={12} prop'u sayesinde bu bölüm her zaman tam bir satırı kaplar. */}
-              <Grid item size={12}>
+              <Grid size={12}>
                 <Paper
                   elevation={4}
                   sx={{
@@ -200,7 +191,7 @@ export default function A101KioskDashboard() {
 
               {/* Uygulama Kısayolları: Slider tam satırı kapladığı için bunlar otomatik olarak alt satıra geçer. */}
               {gridShortcuts.map((app) => (
-                <Grid item xs={6} sm={4} md={3} key={app.id}>
+                <Grid key={app.id}>
                   <Card
                     elevation={2}
                     sx={{
@@ -228,7 +219,7 @@ export default function A101KioskDashboard() {
           </Grid>
 
           {/* Sağ Sidebar (Duyuru Panosu) - 4 birim */}
-          <Grid item size={4}  >
+          <Grid size={4}  >
             <Paper elevation={2} sx={{ display: 'flex', flexDirection: 'column', height: '90%' }}>
               <Box sx={{ p: 2, backgroundColor: '#333', color: '#fff' }}>
                 <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -246,8 +237,8 @@ export default function A101KioskDashboard() {
                 maxHeight: 700
               }}>
                 {announcements.map((item, index) => (
-                  <React.Fragment key={item.id}>
-                    <ListItem button>
+                  <React.Fragment key={index}>
+                    <ListItem button="true">
                       <ListItemIcon>
                         <Avatar sx={{ bgcolor: '#0079c2', width: 32, height: 32 }}>
                           <Typography sx={{ fontSize: '0.7rem' }}>{index + 1}</Typography>
@@ -263,23 +254,30 @@ export default function A101KioskDashboard() {
                   </React.Fragment>
                 ))}
               </List>
-              <Box sx={{ p: 2, borderTop: '1px solid #eee', backgroundColor: '#fafafa' }}>
-                <Typography variant="h6" gutterBottom sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
-                  TÜM ETİKETLERİNİZ GÜNCELDİR
-                </Typography>
-                <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>KASA-1:</span>
-                  <strong>3,582.96 (28)</strong>
-                </Typography>
-                <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span>KASA-2:</span>
-                  <strong>8,865.12 (70)</strong>
-                </Typography>
-                <Divider sx={{ my: 1 }} />
-                <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
-                  <span>Toplam Ciro:</span>
-                  <strong>12,448.08 (98)</strong>
-                </Typography>
+
+              <Box sx={{ borderTop: '1px solid #eee', height: '20%' }}>
+                <Grid container style={{ height: '100%', flex: 1 }}>
+                  <Grid size={6}>
+                    <Button variant="contained" style={{ flex: 1, height: '100%', width: '100%', borderTop: '1px solid #eee', borderRadius: 0 }}>
+                      TÜM ETİKETLERİNİZ GÜNCELDİR
+                    </Button>
+                  </Grid>
+                  <Grid size={6} sx={{ p: 2 }}>
+                    <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span>KASA-1:</span>
+                      <strong>3,582.96 (28)</strong>
+                    </Typography>
+                    <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span>KASA-2:</span>
+                      <strong>8,865.12 (70)</strong>
+                    </Typography>
+                    <Divider sx={{ my: 1 }} />
+                    <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                      <span>Toplam Ciro:</span>
+                      <strong>12,448.08 (98)</strong>
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Box>
             </Paper>
           </Grid>
@@ -290,12 +288,6 @@ export default function A101KioskDashboard() {
       {/* ALT DOCK */}
       <AppBar position="fixed" sx={{ top: 'auto', bottom: 0, backgroundColor: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(10px)' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-          {dockItems.map(item => (
-            <IconButton key={item.text} sx={{ flexDirection: 'column', color: '#333', borderRadius: 2, p: 1 }}>
-              {item.icon}
-              <Typography variant="caption" sx={{ fontSize: '0.6rem', mt: 0.5 }}>{item.text}</Typography>
-            </IconButton>
-          ))}
           {bottomMenuShortcuts.map(app => (
             <IconButton key={app.id} sx={{ flexDirection: 'column', color: '#333', borderRadius: 2, p: 1 }}>
               <img src={app.iconUrl} alt={app.name} style={{ width: 24, height: 24 }} />
@@ -304,7 +296,7 @@ export default function A101KioskDashboard() {
           ))}
         </Toolbar>
       </AppBar>
-    </Box>
+    </Box >
   );
 }
 
