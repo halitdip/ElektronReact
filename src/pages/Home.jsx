@@ -1,342 +1,309 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { GetNewShortcuts } from '../services/main/KioskServices'
 import {
+  AppBar,
   Box,
-  Button,
-  Collapse,
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  Paper,
-  TextField,
-  MenuItem,
+  Card,
+  CardContent,
+  CssBaseline,
   Grid,
-  InputAdornment,
-  Pagination,
-} from '@mui/material'; 
-import SearchIcon from '@mui/icons-material/Search';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday'; 
-import ListIcon from '@mui/icons-material/List'; 
-function createData(
-  magaza,
-  fizikselSayimTarihi,
-  sapRaporlamaTarihi,
-  urunKodu,
-  malzemeKisaMetni,
-  depolamaKosulu,
-  toplamiFiiliMiktar,
-  sayimMiktari,
-  sayimSaati,
-  temelOlcuBirimi,
-  sayimTutar,
-  yoldakiMiktar,
-  noksanTutar
-) {
-  return {
-    magaza,
-    fizikselSayimTarihi,
-    sapRaporlamaTarihi,
-    urunKodu,
-    malzemeKisaMetni,
-    depolamaKosulu,
-    toplamiFiiliMiktar,
-    sayimMiktari,
-    sayimSaati,
-    temelOlcuBirimi,
-    sayimTutar,
-    yoldakiMiktar,
-    noksanTutar,
-  };
-}
- 
-function Row(props) {
-  const { row } = props;
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Toolbar,
+  Typography,
+  Divider,
+  Avatar,
+  keyframes
+} from '@mui/material';
+import {
+  Home,
+  ShoppingCart,
+  MenuBook,
+  Event,
+  Fingerprint,
+  HelpOutline,
+  Folder,
+  AllInbox,
+  Notifications,
+  Screenshot,
+  Email,
+  FlashOn,
+  Security,
+  Computer,
+  Settings,
+  AccountCircle,
+  ArrowBackIosNew,
+  ArrowForwardIos
+} from '@mui/icons-material';
 
-  return (
-    <TableRow
-      sx={{
-        '&:last-child td, &:last-child th': { border: 0 },
-        ...(row.sayimMiktari === 0 && {
-          backgroundColor: '#FFF2CC', 
-        }),
-      }}
-    >
-      <TableCell component="th" scope="row">
-        {row.magaza}
-      </TableCell>
-      <TableCell>{row.fizikselSayimTarihi}</TableCell>
-      <TableCell>{row.sapRaporlamaTarihi}</TableCell>
-      <TableCell>{row.urunKodu}</TableCell>
-      <TableCell>{row.malzemeKisaMetni}</TableCell>
-      <TableCell align="right">{row.depolamaKosulu}</TableCell>
-      <TableCell align="right">{row.toplamiFiiliMiktar}</TableCell>
-      <TableCell align="right">
-        {row.sayimMiktari === 0 ? (
-          <span style={{ color: 'red', fontWeight: 'bold' }}>
-            {row.sayimMiktari}
-          </span>
-        ) : (
-          row.sayimMiktari
-        )}
-      </TableCell>
-      <TableCell>{row.sayimSaati}</TableCell>
-      <TableCell>{row.temelOlcuBirimi}</TableCell>
-      <TableCell align="right">{row.sayimTutar}</TableCell>
-      <TableCell align="right">{row.yoldakiMiktar}</TableCell>
-      <TableCell align="right">{row.noksanTutar}</TableCell>
-    </TableRow>
-  );
-}
+// --- MOCK DATA ---
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    magaza: PropTypes.string.isRequired,
-    fizikselSayimTarihi: PropTypes.string.isRequired,
-    sapRaporlamaTarihi: PropTypes.string.isRequired,
-    urunKodu: PropTypes.string.isRequired,
-    malzemeKisaMetni: PropTypes.string.isRequired,
-    depolamaKosulu: PropTypes.number.isRequired,
-    toplamiFiiliMiktar: PropTypes.number.isRequired,
-    sayimMiktari: PropTypes.number.isRequired,
-    sayimSaati: PropTypes.string.isRequired,
-    temelOlcuBirimi: PropTypes.string.isRequired,
-    sayimTutar: PropTypes.number.isRequired,
-    yoldakiMiktar: PropTypes.number.isRequired,
-    noksanTutar: PropTypes.number.isRequired,
-  }).isRequired,
-};
-
-const rows = [
-  createData(
-    '8012 - Atatürk cd Mahmutlar Antalya',
-    '05-06-2025',
-    '04-06-2025',
-    '10029P9',
-    'KÖFTE DANA IZGARA 400 G BEZLER',
-    14,
-    0,
-    0,
-    '05.06.2025 10:28',
-    'ADT',
-    450.00,
-    0,
-    0
-  ),
-  createData(
-    '245A - Kuluckpark Mahmutlar Antalya',
-    '04-06-2025',
-    '03-06-2025',
-    '10029P9',
-    'KÖFTE DANA IZGARA 400 G BEZLER',
-    14,
-    2,
-    0,
-    '04.06.2025 14:05',
-    'ADT',
-    450.00,
-    0,
-    0
-  ),
-  createData(
-    '6079 - Kervansaray Cd Mahmutlar Antalya',
-    '04-06-2025',
-    '03-06-2025',
-    '1003437',
-    'KUŞBAŞI DANA 400 G',
-    14,
-    0,
-    0,
-    '04.06.2025 14:56',
-    'ADT',
-    450.00,
-    0,
-    0
-  ), 
+// Slider için banner içeriği
+const sliderContent = [
+  {
+    title: 'ÇARŞAMBA',
+    subtitle: 'BİLGİLENDİRMESİ - 02 TEMMUZ 2025',
+    color: '#0079c2'
+  },
+  {
+    title: 'HAFTANIN FIRSATLARI',
+    subtitle: 'SEÇİLİ ÜRÜNLERDE BÜYÜK İNDİRİMLER!',
+    color: '#E53935'
+  },
+  {
+    title: 'ALDIN ALDIN!',
+    subtitle: 'BU PERŞEMBE GELECEK AKTÜEL ÜRÜNLER',
+    color: '#43A047'
+  }
 ];
 
-export default function CollapsibleTable() {
-  const [envanterTipi, setEnvanterTipi] = React.useState('');
-  const [bolgeKodu, setBolgeKodu] = React.useState('9901');
-  const [magazaKodu, setMagazaKodu] = React.useState('');
-  const [fizikselSayimTarihi, setFizikselSayimTarihi] =   React.useState('01.06.2025');
-  const [bitisTarihi, setBitisTarihi] = React.useState('30.06.2025');
+// Uygulama kısayolları
+const appShortcuts = [
+  { text: 'Mağaza Otomasyon', icon: <ShoppingCart sx={{ fontSize: 40, color: '#fff' }} />, color: '#E53935' },
+  { text: 'Kurumsal Portal', icon: <Home sx={{ fontSize: 40, color: '#fff' }} />, color: '#FB8C00' },
+  { text: 'POS Kasa Raporları', icon: <AllInbox sx={{ fontSize: 40, color: '#fff' }} />, color: '#43A047' },
+  { text: 'Eğitim Portalı', icon: <MenuBook sx={{ fontSize: 40, color: '#fff' }} />, color: '#1E88E5' },
+  { text: 'Kurban Kayıt Sistemi', icon: <Event sx={{ fontSize: 40, color: '#fff' }} />, color: '#8E24AA' },
+  { text: 'PUANTAJ', icon: <Fingerprint sx={{ fontSize: 40, color: '#fff' }} />, color: '#00897B' },
+  { text: 'Yardım Masası', icon: <HelpOutline sx={{ fontSize: 40, color: '#fff' }} />, color: '#546E7A' },
+  { text: 'Mağaza Klasörü', icon: <Folder sx={{ fontSize: 40, color: '#fff' }} />, color: '#3949AB' },
+];
 
-  const totalRecords = rows.length;  
+// Kaydırılabilir duyuru paneli için daha fazla veri
+const announcements = [
+  { id: '1', text: 'CIPS MISIR TACO SHOTS 30 G DORITOS', date: '2025-07-08T17:09:49' },
+  { id: '2', text: '27 HAZİRAN - 3 TEMMUZ KASA AKTİVİTESİ 7', date: '2025-07-08T17:47:44' },
+  { id: '3', text: '1000 G NUT MASTER %100 YERFISTIĞI', date: '2025-07-08T17:47:40' },
+  { id: '4', text: 'Aske listeleri - 03.07.2025', date: '2025-07-08T17:12:17' },
+  { id: '5', text: '27 HAZİRAN - 3 TEMMUZ HAFTANIN YILDIZI', date: '2025-07-03T16:10:20' },
+  { id: '6', text: 'Yeni personel eğitimi duyurusu', date: '2025-07-02T11:30:00' },
+  { id: '7', text: 'Stok sayımı hatırlatması', date: '2025-07-01T18:00:15' },
+  { id: '8', text: 'Bayram temizliği planlaması', date: '2025-06-30T14:22:05' },
+  { id: '1', text: 'CIPS MISIR TACO SHOTS 30 G DORITOS', date: '2025-07-08T17:09:49' },
+  { id: '2', text: '27 HAZİRAN - 3 TEMMUZ KASA AKTİVİTESİ 7', date: '2025-07-08T17:47:44' },
+  { id: '3', text: '1000 G NUT MASTER %100 YERFISTIĞI', date: '2025-07-08T17:47:40' },
+  { id: '4', text: 'Aske listeleri - 03.07.2025', date: '2025-07-08T17:12:17' },
+  { id: '5', text: '27 HAZİRAN - 3 TEMMUZ HAFTANIN YILDIZI', date: '2025-07-03T16:10:20' },
+  { id: '6', text: 'Yeni personel eğitimi duyurusu', date: '2025-07-02T11:30:00' },
+  { id: '7', text: 'Stok sayımı hatırlatması', date: '2025-07-01T18:00:15' },
+  { id: '8', text: 'Bayram temizliği planlaması', date: '2025-06-30T14:22:05' },
+];
 
-  const handlePageChange = (event, value) => {
-    console.log('Page changed to:', value);
-     
+// Alt dock ikonları
+const dockItems = [
+  { text: 'Ekran Alıntısı', icon: <Screenshot /> },
+  { text: 'e-Posta', icon: <Email /> },
+  { text: 'Spark', icon: <FlashOn /> },
+  { text: 'Güvenlik', icon: <Security /> },
+  { text: 'Mağaza Terminal', icon: <Computer /> },
+  { text: 'Terminal Güncelle', icon: <Settings /> },
+];
+
+// Animasyon için Keyframes
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+
+
+
+// Ana Bileşen
+export default function A101KioskDashboard() {
+  const currentDate = new Date('2025-07-02T09:08:00');
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  // Slider'ı manuel olarak değiştiren fonksiyonlar
+  const handleNextSlide = () => {
+    setActiveSlide((prev) => (prev + 1) % sliderContent.length);
   };
 
+  const handlePrevSlide = () => {
+    setActiveSlide((prev) => (prev - 1 + sliderContent.length) % sliderContent.length);
+  };
+
+  const getShortcuts = async () => {
+    const getShortcuts = await GetNewShortcuts(9900);
+    console.log(getShortcuts);
+  }
+  useEffect(() => {
+    getShortcuts()
+  }, []);
+
   return (
-    <Box sx={{ padding: 1 }}>
-      <Typography variant="h6" sx={{ marginBottom: 2, fontWeight: 'bold' }}>
-        Sayım Listele
-      </Typography>
- 
-      <Paper elevation={1} sx={{ padding: 2, marginBottom: 3 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid>
-            <TextField
-              select
-              fullWidth
-              label="Envanter Tipi"
-              value={envanterTipi}
-              onChange={(e) => setEnvanterTipi(e.target.value)}
-              size="small"
-              defaultValue="BS Kısmi Envanter"
-            >
-              <MenuItem value="BS Kısmi Envanter">BS Kısmi Envanter</MenuItem> 
-            </TextField>
-          </Grid>
-          <Grid>
-            <TextField
-              fullWidth
-              label="Bölge Kodu"
-              value={bolgeKodu}
-              onChange={(e) => setBolgeKodu(e.target.value)}
-              size="small"
-              placeholder="9901"
-            />
-          </Grid>
-          <Grid>
-            <TextField
-              fullWidth
-              label="Mağaza Kodu"
-              value={magazaKodu}
-              onChange={(e) => setMagazaKodu(e.target.value)}
-              size="small"
-              placeholder="Mağaza Kodu Giriniz"
-            />
-          </Grid>
-          <Grid>
-            <TextField
-              fullWidth
-              label="Fiziksel Sayım Tarihi"
-              value={fizikselSayimTarihi}
-              onChange={(e) => setFizikselSayimTarihi(e.target.value)}
-              size="small"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <CalendarTodayIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-          <Grid>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <TextField
-                fullWidth
-                label="Bitiş Tarihi"
-                value={bitisTarihi}
-                onChange={(e) => setBitisTarihi(e.target.value)}
-                size="small"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <CalendarTodayIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <IconButton color="primary">
-                <SearchIcon />
-              </IconButton>
-              <IconButton color="primary">
-                <ListIcon />
-              </IconButton>
+    <Box sx={{ display: 'flex', height: '100vh', backgroundColor: '#f4f6f8', overflow: 'hidden', maxHeight: '100%' }}>
+      {/* ÜST APP BAR */}
+      {/*     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: '#fff', color: '#263238' }}>
+        <Toolbar>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/A101_logo.svg/1200px-A101_logo.svg.png" alt="A-101 Logo" style={{ height: 30, marginRight: 16 }} />
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
+            Kiosk Arayüzü
+          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, textAlign: 'right' }}>
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 'bold' }}>Turgut Aydın Üsküdar İstanbul - F240</Typography>
+              <Typography variant="caption" color="textSecondary">TERMINAL: MGYT45TRD</Typography>
             </Box>
+            <Divider orientation="vertical" flexItem />
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{currentDate.toLocaleDateString('tr-TR')}</Typography>
+              <Typography variant="caption" color="textSecondary">{currentDate.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</Typography>
+            </Box>
+            <AccountCircle sx={{ color: '#0079c2', fontSize: 32 }} />
+          </Box>
+        </Toolbar>
+      </AppBar>
+ */}
+      {/* ANA İÇERİK */}
+      <Box component="main" sx={{ flexGrow: 1, p: 3, mt: 3, mb: 4, overflow: 'hidden' }}>
+        <Grid container spacing={3} sx={{ height: '100%' }}>
+
+          {/* Sol Panel (Slider ve Kısayollar) - 8 birim */}
+          <Grid item size={8}>
+            <Grid container spacing={3}>
+
+              {/* Slider Banner: xs={12} prop'u sayesinde bu bölüm her zaman tam bir satırı kaplar. */}
+              <Grid item size={12}>
+                <Paper
+                  elevation={4}
+                  sx={{
+                    position: 'relative',
+                    backgroundColor: sliderContent[activeSlide].color,
+                    color: 'white',
+                    padding: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    minHeight: 400,
+                    transition: 'background-color 0.5s ease',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <Box key={activeSlide} sx={{ animation: `${fadeIn} 0.8s ease-in-out` }}>
+                    <Typography variant="h3" component="h1" sx={{ fontWeight: 'bold' }}>
+                      {sliderContent[activeSlide].title}
+                    </Typography>
+                    <Typography variant="h5" component="h2">
+                      {sliderContent[activeSlide].subtitle}
+                    </Typography>
+                  </Box>
+                  <IconButton onClick={handlePrevSlide} sx={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'white', backgroundColor: 'rgba(0, 0, 0, 0.3)', '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.5)' } }}>
+                    <ArrowBackIosNew />
+                  </IconButton>
+                  <IconButton onClick={handleNextSlide} sx={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', color: 'white', backgroundColor: 'rgba(0, 0, 0, 0.3)', '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.5)' } }}>
+                    <ArrowForwardIos />
+                  </IconButton>
+                </Paper>
+              </Grid>
+
+              {/* Uygulama Kısayolları: Slider tam satırı kapladığı için bunlar otomatik olarak alt satıra geçer. */}
+              {appShortcuts.map((app) => (
+                <Grid item xs={6} sm={4} md={3} key={app.text}>
+                  <Card
+                    elevation={2}
+                    sx={{
+                      textAlign: 'center',
+                      backgroundColor: app.color,
+                      color: 'white',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      transition: 'transform 0.2s, box-shadow 0.2s',
+                      '&:hover': { transform: 'scale(1.05)', boxShadow: 6, cursor: 'pointer' },
+                    }}
+                  >
+                    <CardContent>
+                      {app.icon}
+                      <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mt: 1 }}>
+                        {app.text}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           </Grid>
+
+          {/* Sağ Sidebar (Duyuru Panosu) - 4 birim */}
+          <Grid item size={4}  >
+            <Paper elevation={2} sx={{ display: 'flex', flexDirection: 'column', height: '90%' }}>
+              <Box sx={{ p: 2, backgroundColor: '#333', color: '#fff' }}>
+                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Notifications /> BÖLGE DUYURU PANOSU
+                </Typography>
+              </Box>
+              <List sx={{
+                flexGrow: 1,
+                overflowY: 'auto',
+                p: 0,
+                '&::-webkit-scrollbar': { width: '8px' },
+                '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' },
+                '&::-webkit-scrollbar-thumb': { backgroundColor: '#888', borderRadius: '4px' },
+                '&::-webkit-scrollbar-thumb:hover': { backgroundColor: '#555' },
+                maxHeight: 700
+              }}>
+                {announcements.map((item, index) => (
+                  <React.Fragment key={item.id}>
+                    <ListItem button>
+                      <ListItemIcon>
+                        <Avatar sx={{ bgcolor: '#0079c2', width: 32, height: 32 }}>
+                          <Typography sx={{ fontSize: '0.7rem' }}>{index + 1}</Typography>
+                        </Avatar>
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={item.text}
+                        secondary={new Date(item.date).toLocaleString('tr-TR')}
+                        primaryTypographyProps={{ fontWeight: '600', fontSize: '0.9rem' }}
+                      />
+                    </ListItem>
+                    <Divider component="li" />
+                  </React.Fragment>
+                ))}
+              </List>
+              <Box sx={{ p: 2, borderTop: '1px solid #eee', backgroundColor: '#fafafa' }}>
+                <Typography variant="h6" gutterBottom sx={{ color: '#4CAF50', fontWeight: 'bold' }}>
+                  TÜM ETİKETLERİNİZ GÜNCELDİR
+                </Typography>
+                <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>KASA-1:</span>
+                  <strong>3,582.96 (28)</strong>
+                </Typography>
+                <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>KASA-2:</span>
+                  <strong>8,865.12 (70)</strong>
+                </Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                  <span>Toplam Ciro:</span>
+                  <strong>12,448.08 (98)</strong>
+                </Typography>
+              </Box>
+            </Paper>
+          </Grid>
+
         </Grid>
-
-        <Box sx={{ display: 'flex', gap: 1, marginTop: 2 }}>
-          <Button variant="outlined" sx={{ textTransform: 'none' }}>
-            Mağaza Seçiniz
-          </Button>
-          <Button variant="outlined" sx={{ textTransform: 'none' }}>
-            Fiziksel Sayım Tarihi
-          </Button>
-          <Button variant="outlined" sx={{ textTransform: 'none' }}>
-            Tüm Tarihler
-          </Button>
-        </Box>
-      </Paper>
- 
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 1,
-        }}
-      >
-        <Typography variant="body2">
-          Toplam Kayıt: <span style={{ fontWeight: 'bold' }}>{totalRecords}</span>
-        </Typography>
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: '#1976d2', color: 'white', textTransform: 'none' }}
-          startIcon={<SearchIcon />}
-        >
-          Ara
-        </Button>
       </Box>
 
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{ backgroundColor: '#e0e0e0' }}>
-            <TableRow>
-              <TableCell>Mağaza</TableCell>
-              <TableCell>Fiziksel Sayım Tarihi</TableCell>
-              <TableCell>SAP Raporlama Tarihi</TableCell>
-              <TableCell>Ürün Kodu</TableCell>
-              <TableCell>Malzeme Kısa Metni</TableCell>
-              <TableCell align="right">Depolama Koş.</TableCell>
-              <TableCell align="right">Toplam Fiili Miktar</TableCell>
-              <TableCell align="right">Sayım Miktarı</TableCell>
-              <TableCell>Sayım Saati</TableCell>
-              <TableCell>Temel Ölçü Birimi</TableCell>
-              <TableCell align="right">Sayım Tutar</TableCell>
-              <TableCell align="right">Yoldaki Miktarı</TableCell>
-              <TableCell align="right">Noksan Tutarı</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <Row key={row.urunKodu + row.magaza} row={row} />  
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
- 
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-        <Pagination
-          count={3} 
-          page={1} 
-          onChange={handlePageChange}
-          variant="outlined"
-          shape="rounded"
-          siblingCount={1}
-          boundaryCount={1}
-        />
-        <TextField
-          select
-          value={20}
-          size="small"
-          sx={{ marginLeft: 2, width: 70 }}
-        >
-          <MenuItem value={10}>10</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-          <MenuItem value={50}>50</MenuItem>
-        </TextField>
-      </Box>
+      {/* ALT DOCK */}
+      <AppBar position="fixed" sx={{ top: 'auto', bottom: 0, backgroundColor: 'rgba(255, 255, 255, 0.85)', backdropFilter: 'blur(10px)' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+          {dockItems.map(item => (
+            <IconButton key={item.text} sx={{ flexDirection: 'column', color: '#333', borderRadius: 2, p: 1 }}>
+              {item.icon}
+              <Typography variant="caption" sx={{ fontSize: '0.6rem', mt: 0.5 }}>{item.text}</Typography>
+            </IconButton>
+          ))}
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }

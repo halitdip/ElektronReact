@@ -13,20 +13,26 @@ import Info from './pages/Info';
 import Login from './pages/auth/login';
 import Sidebar from './components/Sidebar';
 
-function App() { 
+function App() {
   const isLogin = true;
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
- 
+
       <GlobalStyles styles={{
         'h1, h2, h3, h4, h5, h6, p': {
           margin: 0,
           padding: 0,
         },
+        'html, body, #root': {
+          height: '100%',
+          overflow: 'hidden',
+          margin: 0,
+          padding: 0
+        },
       }} />
- 
+
       <HashRouter future={{
         v7_startTransition: true,
         v7_relativeSplatPath: true
@@ -34,14 +40,15 @@ function App() {
         {isLogin ? (
           <div style={{
             display: 'flex',
-            height: '100vh',
+            overflow: 'hidden',
             flexDirection: 'column'
           }}>
             <Sidebar />
             <div style={{
               flex: 1,
               padding: 10,
-              backgroundColor: '#f5f5f5'
+              backgroundColor: '#f5f5f5',
+              overflow:'hidden'
             }}>
               <Routes>
                 <Route path="/" element={<Home />} />
