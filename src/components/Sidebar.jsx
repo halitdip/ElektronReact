@@ -132,20 +132,20 @@ export default function TopNav() {
             <Typography variant="caption">Ekranı Yenile</Typography>
           </ActionButton>
           <ActionButton onClick={handleSwitchUser}>
-            <IconButton size="large" sx={{ bgcolor: 'red', color: '#fff' }}>
+            <IconButton size="large" color="inherit">
               <SwitchAccountIcon />
             </IconButton>
             <Typography variant="caption">Kullanıcı Değiştir</Typography>
           </ActionButton>
           <ActionButton onClick={handleRestart}>
-            <IconButton size="large" sx={{ bgcolor: 'red', color: '#fff' }}>
+            <IconButton size="large" color="inherit">
               <RestartAltIcon />
             </IconButton>
             <Typography variant="caption">Yeniden Başlat</Typography>
           </ActionButton>
 
           <ActionButton onClick={handleShutdown}>
-            <IconButton size="large" sx={{ bgcolor: 'red', color: '#fff' }}>
+            <IconButton size="large" style={{ color: 'red' }}>
               <PowerSettingsNewIcon />
             </IconButton>
             <Typography variant="caption" style={{ color: 'red', fontWeight: 'bold' }}>Kapat</Typography>
