@@ -53,10 +53,10 @@ export default function A101KioskDashboard() {
     function scaleKiosk() {
       const element = rootRef.current;
       if (!element) return;
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const w = 1920,
-        h = 1080;
+      const parent = element.parentElement;
+      const vw = parent.clientWidth;
+      const vh = parent.clientHeight;
+      const w = 1920, h = 1080;
       const scale = Math.min(vw / w, vh / h);
       const left = (vw - w * scale) / 2;
       const top = (vh - h * scale) / 2;
@@ -91,21 +91,6 @@ export default function A101KioskDashboard() {
   return (
     <div className="kiosk-viewport">
       <div className="kiosk-root" ref={rootRef}>
-        {/* Üst Panel */}
-        {/*    <div className="kiosk-header">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/A101_logo.svg/1200px-A101_logo.svg.png" alt="logo" className="logo" />
-        <div className="header-title">Kiosk Arayüzü</div>
-        <div className="header-info">
-          <div>
-            <b>Turgut Aydın Üsküdar İstanbul - F240</b>
-            <div>TERMINAL: MGYT45TRD</div>
-          </div>
-          <div>
-            {new Date().toLocaleDateString("tr-TR")}<br />
-            {new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}
-          </div>
-        </div>
-      </div> */}
         <div className="kiosk-main">
           {/* Sol Panel */}
           <div className="main-left">
@@ -159,6 +144,7 @@ export default function A101KioskDashboard() {
             </div>
           ))}
         </div>
-      </div></div>
+      </div>
+    </div>
   );
 }
