@@ -2,13 +2,13 @@
 
 import UniterApiService from './HttpClientServices';
 /* import AsyncStorage from '@react-native-async-storage/async-storage'; */
-/* import { startLoading, stopLoading } from './loadingService'; */
+import { startLoading, stopLoading } from './loadingService';
 // logoutFunction parametresini kaldırın ve getLogoutFunction'ı import edin 
 
-export const ApiHelper = async (requests) => { // logoutFunction parametresini kaldırdık 
+export const ApiHelper = async (requests) => { // logoutFunction parametresini kaldırdık
   const loader = typeof requests[0].loader === 'boolean' ? requests[0].loader : true
-/*   if (loader)
-    startLoading(); */
+  if (loader)
+    startLoading();
 
   try {
     if (!Array.isArray(requests)) {
@@ -72,7 +72,9 @@ export const ApiHelper = async (requests) => { // logoutFunction parametresini k
     return merged;
   } catch (error) {
     throw error;
-  }/*  finally {
-    stopLoading();
-  } */
+  } finally {
+    if (loader)
+      stopLoading();
+  }
 };
+

@@ -38,7 +38,7 @@
     "style-loader": "^4.0.0",
     "typescript": "^5.8.3",
     "webpack-dev-server": "^5.2.2"
-  }, 
+  },
   "build": {
     "asar": true,
     "appId": "com.mycompany.myapp",
@@ -53,11 +53,16 @@
     ],
     "icon": "a-101-logo.ico",
     "win": {
-      "target": ["nsis"],
+      "target": [
+        "nsis"
+      ],
       "icon": "a-101-logo.ico"
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "icon": "a-101-logo.png"
     },
     "nsis": {

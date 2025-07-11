@@ -12,13 +12,22 @@ import About from './pages/About';
 import Info from './pages/Info';
 import Login from './pages/auth/login';
 import Sidebar from './components/Sidebar';
+import LoadingOverlay from './components/LoadingOverlay';
+import { useState, useEffect } from 'react';
+import { registerLoadingSetter } from './services/extension/loadingService';
 
 function App() {
   const isLogin = true;
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    registerLoadingSetter(setLoading);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <LoadingOverlay open={loading} />
 
       <GlobalStyles styles={{
         'h1, h2, h3, h4, h5, h6, p': {
@@ -69,3 +78,4 @@ function App() {
 
 const container = document.getElementById('root');
 createRoot(container).render(<App />);
+

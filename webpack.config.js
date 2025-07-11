@@ -12,7 +12,7 @@ module.exports = {
     publicPath: isProd ? './' : '/',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],      
+    extensions: ['.js', '.jsx'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
@@ -37,7 +37,11 @@ module.exports = {
         generator: {
           filename: 'fonts/[name][ext]'
         }
-      }
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   plugins: [
@@ -48,7 +52,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'public/fonts', to: 'fonts' }, 
+        { from: 'public/fonts', to: 'fonts' },
       ],
     }),
   ],
@@ -67,7 +71,8 @@ module.exports = {
         "default-src 'self'",
         "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
         "style-src 'self' 'unsafe-inline'",
-        "connect-src 'self' ws://localhost:8080 http://localhost:8080"
+        "img-src 'self' http://magaza.a101.local",
+        "connect-src 'self' ws://localhost:8080 http://localhost:8080 http://10.7.2.21:8039"
       ].join('; ')
     },
   },
