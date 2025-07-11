@@ -1,0 +1,270 @@
+/* Sadece bir defa base frame tanımı */
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #222;
+    /* letterbox siyah */
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.kiosk-viewport {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #222; 
+    position: relative;
+}
+
+.kiosk-root {
+    width: 1920px;
+    height: 1080px;
+    background: transparent;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: top left;
+    /* transform: JS tarafından eklenecek! */
+    
+    /* NEW: Make kiosk-root a flex container */
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Header */
+.kiosk-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 1.4rem;
+    border-bottom: 2px solid #0079c2;
+    background: #ffffff; /* Added background for visibility if re-enabled */
+    flex-shrink: 0; /* Header'ın küçülmesini engelle */
+}
+
+.logo {
+    height: 60px;
+    margin-right: 28px;
+}
+
+.header-title {
+    flex: 1;
+    font-weight: bold;
+    font-size: 2.2rem;
+}
+
+.header-info {
+    display: flex;
+    gap: 30px;
+    font-size: 1rem;
+    color: #333;
+    align-items: center;
+}
+
+/* Ana içerik */
+.kiosk-main {
+    display: flex;
+    flex: 1; /* Ana içeriğin tüm boş alanı doldurmasını sağla */
+    background-color: #f4f6f8;
+}
+
+/* Sol ana panel */
+.main-left {
+    flex: 2;
+    padding: 30px; /* shorthand for 30px 30px 30px 30px */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.banner {
+    position: relative;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    border-radius: 24px;
+    color: #fff;
+    padding: 0 60px;
+    font-size: 1.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+    flex-shrink: 0; /* Banner'ın küçülmesini engelle */
+}
+
+.banner-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.18);
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.banner-arrow.left {
+    left: 14px;
+}
+
+.banner-arrow.right {
+    right: 14px;
+}
+
+.banner-content {
+    flex: 1;
+    text-align: center;
+}
+
+.banner-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+.banner-sub {
+    font-size: 1.2rem;
+}
+
+/* Kısayollar */
+.shortcuts {
+    display: grid;
+    overflow-y: auto; /* İçerik taşarsa kaydırma çubuğu çıksın */
+    overflow-x: hidden;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    flex: 1; /* Shortcuts alanının mevcut alanı doldurmasını sağla */
+}
+
+.shortcut-card {
+    height: 110px;
+    border-radius: 14px;
+    background: #0079c2;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.1s;
+    flex-direction: column; /* İkon ve metin alt alta gelsin */
+}
+
+.shortcut-card:hover {
+    transform: scale(1.04);
+}
+
+/* Sağ panel */
+.main-right {
+    flex: 1;
+    padding: 30px 30px 30px 0; /* Sağda boşluk bırakma */
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.ann-header {
+    background: #333;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 1.12rem;
+    font-weight: bold;
+    flex-shrink: 0; /* Başlık küçülmesin */
+}
+
+.announcements {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    flex: 1; /* Duyurular alanının mevcut alanı doldurmasını sağla */
+    overflow-y: auto; /* Duyurular taşarsa kaydırma çubuğu çıksın */
+}
+
+.announcement {
+    display: flex;
+    gap: 18px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.announcement:last-child {
+    border-bottom: none;
+}
+
+.ann-index {
+    background: #0079c2;
+    color: #fff;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0; /* Küçülmesini engelle */
+}
+
+.ann-text {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.ann-date {
+    font-size: 0.82rem;
+    color: #888;
+}
+
+.ciro-panel {
+    background: #f6f6f6;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 1rem;
+    margin-top: 10px;
+    flex-shrink: 0; /* Ciro panelinin küçülmesini engelle */
+}
+
+/* Alt Dock */
+.kiosk-footer { 
+    background: #fff;
+    border-top: 2px solid #0079c2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px; 
+    height: 90px; /* Footer'a sabit bir yükseklik veriyoruz */
+    flex-shrink: 0; /* Footer'ın küçülmesini engelle */
+}
+
+.dock-btn {
+    padding: 10px;
+    border-radius: 16px;
+    background: #e3eafc;
+    color: #0079c2;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.12rem;
+    cursor: pointer;
+    transition: background .12s;
+}
+
+.dock-btn:hover {
+    background: #d1e3f8;
+}
