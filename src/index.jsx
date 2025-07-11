@@ -36,6 +36,7 @@ function App() {
         },
         'html, body, #root': {
           height: '100%',
+          width: '100%',
           overflow: 'hidden',
           margin: 0,
           padding: 0
@@ -56,7 +57,6 @@ function App() {
             <Sidebar />
             <div style={{
               flex: 1,
-              padding: 10,
               backgroundColor: '#f5f5f5',
               overflow:'hidden',
               height: '100%'
