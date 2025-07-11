@@ -50,14 +50,16 @@ function App() {
           <div style={{
             display: 'flex',
             overflow: 'hidden',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            height: '100%'
           }}>
             <Sidebar />
             <div style={{
               flex: 1,
               padding: 10,
               backgroundColor: '#f5f5f5',
-              overflow:'hidden'
+              overflow:'hidden',
+              height: '100%'
             }}>
               <Routes>
                 <Route path="/" element={<Home />} />
