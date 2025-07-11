@@ -53,8 +53,9 @@ export default function A101KioskDashboard() {
     function scaleKiosk() {
       const element = rootRef.current;
       if (!element) return;
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
+      const parent = element.parentElement;
+      const vw = parent.clientWidth;
+      const vh = parent.clientHeight;
       const w = 1920,
         h = 1080;
       const scale = Math.min(vw / w, vh / h);
