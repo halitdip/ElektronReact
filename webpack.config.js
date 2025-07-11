@@ -12,7 +12,7 @@ module.exports = {
     publicPath: isProd ? './' : '/',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],      
+    extensions: ['.js', '.jsx'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
@@ -37,7 +37,11 @@ module.exports = {
         generator: {
           filename: 'fonts/[name][ext]'
         }
-      }
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   plugins: [
@@ -48,7 +52,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'public/fonts', to: 'fonts' }, 
+        { from: 'public/fonts', to: 'fonts' },
       ],
     }),
   ],
