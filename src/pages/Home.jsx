@@ -51,16 +51,20 @@ export default function A101KioskDashboard() {
 
   useEffect(() => {
     function scaleKiosk() {
-      const vw = window.innerWidth, vh = window.innerHeight, w = 1920, h = 1080;
+      const element = rootRef.current;
+      if (!element) return;
+      const parent = element.parentElement;
+      const vw = parent.clientWidth;
+      const vh = parent.clientHeight;
+      const w = 1920,
+        h = 1080;
       const scale = Math.min(vw / w, vh / h);
       const left = (vw - w * scale) / 2;
       const top = (vh - h * scale) / 2;
-      if (rootRef.current) {
-        rootRef.current.style.transform = `translate(${left}px, ${top}px) scale(${scale})`;
-      }
+      element.style.transform = `translate(${left}px, ${top}px) scale(${scale})`;
     }
     window.addEventListener('resize', scaleKiosk);
-    scaleKiosk(); // ilk yüklemede de çalışsın
+    scaleKiosk();
     return () => window.removeEventListener('resize', scaleKiosk);
   }, []);
 
