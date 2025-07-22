@@ -77,4 +77,3 @@ export const ApiHelper = async (requests) => { // logoutFunction parametresini k
       stopLoading();
   }
 };
-

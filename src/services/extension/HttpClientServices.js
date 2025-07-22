@@ -34,14 +34,14 @@ export default async function UniterApiService(
         const baseURL = BASE_URLS[site];
 
 
-        const fullURL = baseURL + url; // Örneğin 'http://localhost:3001/' + 'api/auth/login'
+        const fullURL = baseURL + url;  
 
         const headers = {
             'Content-Type': 'application/json',
         }; 
         if (security === 1 && token) {
             headers.Authorization = `Bearer ${token}`;
-        }  
+        } 
         // Axios isteği
         const response = await axios({
             method: method,
