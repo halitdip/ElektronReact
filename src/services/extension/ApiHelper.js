@@ -6,7 +6,7 @@ import { startLoading, stopLoading } from './loadingService';
 // logoutFunction parametresini kaldırın ve getLogoutFunction'ı import edin 
 
 export const ApiHelper = async (requests) => { // logoutFunction parametresini kaldırdık
-  const loader = typeof requests[0].loader === 'boolean' ? requests[0].loader : true
+  const loader = typeof requests[0].isLoading === 'boolean' ? requests[0].isLoading : true
   if (loader)
     startLoading();
 
