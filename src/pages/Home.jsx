@@ -7,10 +7,11 @@ import {
   Grid,
   Typography,
   Divider,
-  Modal
+  Modal,
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import LabelTable from '../components/LabelTable';
 // --- MOCK DATA ---
 const sliderContent = [
   {
@@ -230,13 +231,10 @@ export default function A101KioskDashboard() {
             <CloseIcon />
           </IconButton>
           {/* Modal içeriği */}
-          <Typography id="modal-title" variant="h6" component="h2" sx={{ fontWeight: 600, pr: 4 }}>
-            Modal Başlığı
+          <Typography id="modal-title" variant="h6" component="h2" sx={{ fontWeight: 600, pr: 4, mb:2 }}>
+            Etiket Listesi
           </Typography>
-          <Typography id="modal-description" sx={{ mt: 2 }}>
-            Buraya istediğin metni veya bileşenleri ekleyebilirsin.
-            Tasarım şimdi gölgeli, ortalanmış ve daha modern.
-          </Typography>
+          <LabelTable rows={labels} />
         </Box>
       </Modal>
     </div>
@@ -247,8 +245,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  minWidth: 340,
-  maxWidth: 400,
+  minWidth: 700,
+  maxWidth: '90%',
   bgcolor: '#fff',
   borderRadius: 3,
   boxShadow: 24,
