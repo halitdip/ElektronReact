@@ -1,7 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../assets/css/home.css";
-import { GetNewShortcuts } from '../services/main/KioskServices'
-
+import { GetNewShortcuts, GetLabelsWithLastDay } from '../services/main/KioskServices'
+import {
+  Box,
+  Button,
+  Grid,
+  Typography,
+  Divider,
+  Modal
+} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 // --- MOCK DATA ---
 const sliderContent = [
   {
@@ -36,38 +45,74 @@ const announcements = [
 export default function A101KioskDashboard() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [appShortcuts, setAppShortcuts] = useState([]);
-  const rootRef = useRef(null);
-  // Burada backend isteği simüle ediliyor
-  const getShortcuts = async () => {
-    try {
-      const response = await GetNewShortcuts(9900);
-      console.log(response?.shortcuts?.data)
-      setAppShortcuts(response?.shortcuts?.data || []);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [labelStatus, setLabelStatus] = useState(false);
+  const [labels, setLabels] = useState([])
+  const [labelModalStatus, setLabelModalStatus] = useState(false);
 
+  const rootRef = useRef(null);
 
   useEffect(() => {
     function scaleKiosk() {
-      const vw = window.innerWidth, vh = window.innerHeight, w = 1920, h = 1080;
+      const element = rootRef.current;
+      if (!element) return;
+      const parent = element.parentElement;
+      const vw = parent.clientWidth;
+      const vh = parent.clientHeight;
+      const w = 1920, h = 1080;
       const scale = Math.min(vw / w, vh / h);
       const left = (vw - w * scale) / 2;
       const top = (vh - h * scale) / 2;
-      if (rootRef.current) {
-        rootRef.current.style.transform = `translate(${left}px, ${top}px) scale(${scale})`;
-      }
+      element.style.transform = `translate(${left}px, ${top}px) scale(${scale})`;
     }
     window.addEventListener('resize', scaleKiosk);
-    scaleKiosk(); // ilk yüklemede de çalışsın
+    scaleKiosk();
     return () => window.removeEventListener('resize', scaleKiosk);
   }, []);
 
 
   useEffect(() => {
-    getShortcuts();
+    getMainServices();
   }, []);
+
+
+  const getMainServices = async () => {
+    try {
+      const response = await GetNewShortcuts(9900, 'F240');
+
+      if (response.GetLabelDownloadStatus.isError) {
+        alert("Etiket güncel mi ? kontrolü yapılamadı..")
+      } else {
+        setLabelStatus(response?.GetLabelDownloadStatus?.data.anyUndownloaded);
+
+      }
+
+      if (response.shortcuts.isError) {
+        alert("Kısayollar verisi alınamadı lütfen daha sonra tekrar deneyiniz..")
+      } else {
+        setAppShortcuts(response?.shortcuts?.data || []);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDownloadLabel = async () => {
+    try {
+      const response = await GetLabelsWithLastDay('F240');
+      console.log(response)
+      if (response.getLabel.isError) {
+        alert("Etiket verileri alınamadı ! Lütfen daha sonra tekrar deneyiniz..")
+      } else {
+        setLabels(response?.getLabel?.data);
+        setLabelModalStatus(true)
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleClose = () => setLabelModalStatus(false);
+
 
 
   const bottomMenuShortcuts = appShortcuts.filter(
@@ -84,25 +129,9 @@ export default function A101KioskDashboard() {
   const handlePrevSlide = () => {
     setActiveSlide((prev) => (prev - 1 + sliderContent.length) % sliderContent.length);
   };
-
   return (
     <div className="kiosk-viewport">
       <div className="kiosk-root" ref={rootRef}>
-        {/* Üst Panel */}
-        {/*    <div className="kiosk-header">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/A101_logo.svg/1200px-A101_logo.svg.png" alt="logo" className="logo" />
-        <div className="header-title">Kiosk Arayüzü</div>
-        <div className="header-info">
-          <div>
-            <b>Turgut Aydın Üsküdar İstanbul - F240</b>
-            <div>TERMINAL: MGYT45TRD</div>
-          </div>
-          <div>
-            {new Date().toLocaleDateString("tr-TR")}<br />
-            {new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}
-          </div>
-        </div>
-      </div> */}
         <div className="kiosk-main">
           {/* Sol Panel */}
           <div className="main-left">
@@ -139,12 +168,31 @@ export default function A101KioskDashboard() {
                 </div>
               ))}
             </div>
-            <div className="ciro-panel">
-              <div>TÜM ETİKETLERİNİZ GÜNCELDİR</div>
-              <div>KASA-1: <b>3,582.96 (28)</b></div>
-              <div>KASA-2: <b>8,865.12 (70)</b></div>
-              <div>Toplam Ciro: <b>12,448.08 (98)</b></div>
-            </div>
+            <Box sx={{ borderTop: '1px solid #eee', height: '20%' }}>
+              <Grid container style={{ height: '100%', flex: 1 }}>
+                <Grid size={6}>
+                  <Button variant="contained" color={labelStatus ? "primary" : "warning"} onClick={handleDownloadLabel}
+                    style={{ flex: 1, height: '100%', width: '100%', borderTop: '1px solid #eee', borderRadius: 0 }}>
+                    {labelStatus ? 'TÜM ETİKETLERİNİZ GÜNCELDİR !' : 'ETİKETLERİNİZ GÜNCEL DEĞİLDİR !'}
+                  </Button>
+                </Grid>
+                <Grid size={6} sx={{ p: 2 }}>
+                  <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>KASA-1:</span>
+                    <strong>3,582.96 (28)</strong>
+                  </Typography>
+                  <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>KASA-2:</span>
+                    <strong>8,865.12 (70)</strong>
+                  </Typography>
+                  <Divider sx={{ my: 1 }} />
+                  <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                    <span>Toplam Ciro:</span>
+                    <strong>12,448.08 (98)</strong>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
           </div>
         </div>
         {/* Alt Dock */}
@@ -156,6 +204,54 @@ export default function A101KioskDashboard() {
             </div>
           ))}
         </div>
-      </div></div>
+      </div>
+
+      <Modal
+        open={labelModalStatus}
+        onClose={handleClose}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+        closeAfterTransition
+        slotProps={{ backdrop: { style: { backgroundColor: 'rgba(0,0,0,0.7)' } } }}
+      >
+        <Box sx={style}>
+          {/* Çarpı butonu sağ üstte */}
+          <IconButton
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: 12,
+              top: 12,
+              color: '#888',
+              zIndex: 1,
+            }}
+            aria-label="close"
+          >
+            <CloseIcon />
+          </IconButton>
+          {/* Modal içeriği */}
+          <Typography id="modal-title" variant="h6" component="h2" sx={{ fontWeight: 600, pr: 4 }}>
+            Modal Başlığı
+          </Typography>
+          <Typography id="modal-description" sx={{ mt: 2 }}>
+            Buraya istediğin metni veya bileşenleri ekleyebilirsin.
+            Tasarım şimdi gölgeli, ortalanmış ve daha modern.
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
   );
 }
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  minWidth: 340,
+  maxWidth: 400,
+  bgcolor: '#fff',
+  borderRadius: 3,
+  boxShadow: 24,
+  p: 4,
+  outline: 'none',
+};

@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #222;
+    background: white;
     /* letterbox siyah */
 }
 
@@ -17,13 +17,13 @@ body {
 }
 
 .kiosk-viewport {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: #222; 
+    background: white; 
     position: relative;
 }
 
@@ -78,7 +78,9 @@ body {
 .kiosk-main {
     display: flex;
     flex: 1; /* Ana içeriğin tüm boş alanı doldurmasını sağla */
-    background-color: #f4f6f8;
+    min-height: 0; /* Alt bölümlerin taşmaması için */
+    background-color: white;
+    width: 100%;
 }
 
 /* Sol ana panel */
@@ -88,6 +90,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    min-height: 0; /* Shortcuts alanı için */
 }
 
 .banner {
@@ -148,6 +151,7 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     flex: 1; /* Shortcuts alanının mevcut alanı doldurmasını sağla */
+    min-height: 0; /* Taşma olursa kaydırma */
 }
 
 .shortcut-card {
@@ -176,6 +180,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 18px;
+    min-height: 0; /* Duyuru alanı için */
 }
 
 .ann-header {
