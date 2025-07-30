@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
 import { CssBaseline, GlobalStyles } from '@mui/material'; 
 import { getTheme } from './theme/theme';
@@ -7,7 +7,8 @@ import Home from './features/Home';
 import Login from './features/Login';
 import Sidebar from './components/Sidebar';
 import LoadingOverlay from './components/LoadingOverlay';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext';
 
 const STORAGE_KEY = 'mui_app_theme';
 
@@ -17,7 +18,7 @@ export const ColorModeContext = React.createContext({
 });
 
 export default function App() {
-  const isLogin = true;
+  const { isAuthenticated } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<'light' | 'dark'>('dark');
 
@@ -67,10 +68,13 @@ export default function App() {
         <LoadingOverlay open={loading} />
         <HashRouter>
           <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
-            <Sidebar />
+            {isAuthenticated && <Sidebar />}
             <Routes>
-              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route
+                path="/"
+                element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
+              />
             </Routes>
           </div>
         </HashRouter>
