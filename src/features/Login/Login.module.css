@@ -1,0 +1,44 @@
+ .wrapper {
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+ }
+
+ .card {
+   max-width: 360px;
+   width: 100%;
+   padding: 14px;
+   border-radius: 8px !important;
+   background-color: 'red';
+   text-align: center;
+   
+ }
+
+ .logo {
+   height: 48px;
+ }
+
+ .title {
+   margin: 5px 0 15px 0 !important;
+   font-size: 14px !important;
+   font-weight: bold !important;
+ }
+
+ .form {
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
+ }
+
+ .dialogTitle {
+   text-align: center;
+ }
+
+ .dialogContent {
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
+
+ }

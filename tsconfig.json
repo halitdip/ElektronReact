@@ -18,8 +18,8 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "typeRoots": [
-      "./node_modules/@types",
-      "./src/types"
+      "./src/custom.d.ts",
+      "./node_modules/@types"
     ]
   },
   "include": [
