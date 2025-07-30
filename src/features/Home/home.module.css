@@ -63,6 +63,7 @@
 
 .leftPanel {
   width: 208px;
+  max-height: 250px;
   background-color: var(--left-panel-bg);
   border-right: 1px solid #475569;
   padding: 16px;
@@ -106,6 +107,7 @@
 .rightPanel {
   flex: 1;
   padding: 16px;
+  max-height: 250px;
 }
 
 .logBox {

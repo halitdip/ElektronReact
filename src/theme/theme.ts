@@ -1,4 +1,3 @@
-// src/theme/theme.ts
 import { createTheme } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
@@ -27,7 +26,6 @@ declare module '@mui/material/styles' {
   }
 }
 
-
 export const getTheme = (mode: 'light' | 'dark') =>
   createTheme({
     palette: {
@@ -43,25 +41,25 @@ export const getTheme = (mode: 'light' | 'dark') =>
       },
     },
     customColors: {
-      headerBackground: mode === 'dark' ? '#121212' : '#ECECEC',
-      border: mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
+      headerBackground: mode === 'dark' ? '#121212' : '#F5F5F5',
+      border: mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)',
       shadow: mode === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.05)',
       legendBoxBg: mode === 'dark'
         ? 'rgba(30, 30, 40, 0.8)'
-        : 'rgba(255,255,255,0.95)',
+        : 'rgba(255,255,255,0.9)',
       gradient:
         mode === 'dark'
           ? ['#0f3443', '#19324c', '#105e62', '#27ae60']
-          : ['#67e8f9', '#b9ffb7', '#a8ff78', '#27ae60'],
-      wrapperBg: mode === 'dark' ? '#0f172a' : '#ffffff',
+          : ['#ECEFF1', '#CFD8DC', '#B0BEC5', '#90A4AE'],
+      wrapperBg: mode === 'dark' ? '#0f172a' : '#FAFAFA',
       textColor: mode === 'dark' ? '#f1f5f9' : '#1e293b',
       progressBarBg: mode === 'dark' ? '#1e293b' : '#e2e8f0',
-      leftPanelBg: mode === 'dark' ? '#1e293b' : '#f8fafc',
-      logboxBg: mode === 'dark' ? '#0f172a' : '#ffffff',
-      statusbarBg: mode === 'dark' ? '#1e293b' : '#e5e7eb',
+      leftPanelBg: mode === 'dark' ? '#1e293b' : '#FFFFFF',
+      logboxBg: mode === 'dark' ? '#0f172a' : '#FFFFFF',
+      statusbarBg: mode === 'dark' ? '#1e293b' : '#F1F5F9',
       statusText: mode === 'dark' ? '#cbd5e1' : '#475569',
       linkColor: mode === 'dark' ? '#38bdf8' : '#2563eb',
-      statusButtonBg: mode === 'dark' ? '#334155' : '#e2e8f0',
+      statusButtonBg: mode === 'dark' ? '#334155' : '#F1F3F5',
       statusButtonText: mode === 'dark' ? '#f1f5f9' : '#1e293b',
     },
     typography: {
