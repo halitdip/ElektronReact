@@ -7,7 +7,7 @@ import { ColorModeContext } from '../../App';
 import LoginForm from './components/LoginForm';
 import BSDialog from './components/BSDialog';
 import { SnackbarAlert } from '../../components/SnackbarAlert';
-import useLogin from './useLogin'; 
+import useLogin from './useLogin';
 const Logo = require('../../assets/img/a-101-logo.png');
 const styles = require('./Login.module.css');
 
@@ -45,18 +45,24 @@ const Login: React.FC = () => {
       }}
     >
       <Paper className={styles.card} elevation={8}>
-        <span className={styles.version}>v{version}</span>
-        <IconButton
-          size="small"
-          className={styles.themeToggle}
-          onClick={colorMode.toggleColorMode}
-        >
-          {colorMode.mode === 'dark' ? (
-            <Brightness7Icon fontSize="small" />
-          ) : (
-            <Brightness4Icon fontSize="small" />
-          )}
-        </IconButton>
+
+        <div className={styles.TopinfoCard}>
+          <span className={styles.version}>v{version}</span>
+
+          <IconButton
+            size="small"
+            className={styles.themeToggle}
+            onClick={colorMode.toggleColorMode}
+          >
+            {colorMode.mode === 'dark' ? (
+              <Brightness7Icon fontSize="small" />
+            ) : (
+              <Brightness4Icon fontSize="small" />
+            )}
+          </IconButton>
+        </div>
+
+
         <img src={Logo} alt="Logo" className={styles.logo} />
         <Typography variant="h6" className={styles.title}>
           Mağaza Girişi

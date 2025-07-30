@@ -24,6 +24,12 @@ export default function StatusBar() {
           <span className={styles.statusText}>Versiyon: V.{version}</span>
         </div>
         <button className={styles.linkButton}>📄<span>Kullanıcı Dokümanı</span></button>
+
+      </div>
+      <div style={{ display: 'flex', gap: '8px',justifyContent: 'flex-end', alignItems: 'center' }}>
+        <button className={styles.statusButton}>Ekranı Aç</button>
+        <button className={styles.statusButton}>Ekranı Kapat</button>
+
         <IconButton size="small" onClick={colorMode.toggleColorMode}>
           {colorMode.mode === 'dark' ? (
             <Brightness7Icon fontSize="small" />
@@ -31,10 +37,6 @@ export default function StatusBar() {
             <Brightness4Icon fontSize="small" />
           )}
         </IconButton>
-      </div>
-      <div style={{ display: 'flex', gap: '8px' }}>
-        <button className={styles.statusButton}>Ekranı Aç</button>
-        <button className={styles.statusButton}>Ekranı Kapat</button>
       </div>
     </div>
   );
