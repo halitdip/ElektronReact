@@ -3,6 +3,11 @@ const path = require('path');
 require('@electron/remote/main').initialize();
 const localShortcut = require('electron-localshortcut');
 
+// Suppress security warnings during development
+if (!app.isPackaged) {
+  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
+}
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 620,
