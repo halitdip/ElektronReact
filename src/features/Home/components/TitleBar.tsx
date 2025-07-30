@@ -1,6 +1,11 @@
 import React from 'react';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import styles from '../home.module.css';
+let styles: { [key: string]: string } = {};
+try {
+  styles = require('../home.module.css');
+} catch (err) {
+  console.error('Failed to load Home styles', err);
+}
 
 export default function TitleBar() {
   return (

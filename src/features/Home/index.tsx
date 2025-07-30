@@ -1,10 +1,16 @@
 import React from 'react';
-import styles from './home.module.css';
 import TitleBar from './components/TitleBar';
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
 import StatusBar from './components/StatusBar';
 import { useHome } from './useHome';
+
+let styles: { [key: string]: string } = {};
+try {
+  styles = require('./home.module.css');
+} catch (err) {
+  console.error('Failed to load Home styles', err);
+}
 
 export default function Home() {
   const { logs, handleSendFromTerminal, handleSendToTerminal } = useHome();
