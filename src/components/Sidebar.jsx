@@ -15,7 +15,10 @@ export default function TopNav() {
   const handleClose = () => {
     const remote = window.require('@electron/remote');
     const win = remote.getCurrentWindow ? remote.getCurrentWindow() : remote.BrowserWindow.getFocusedWindow();
-    if (win) win.close();
+    if (win) {
+      win.removeAllListeners && win.removeAllListeners('close');
+      win.close();
+    }
   };
 
   const handleMinimize = () => {
