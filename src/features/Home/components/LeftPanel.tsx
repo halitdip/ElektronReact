@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from '../home.module.css';
+import importedStyles from '../home.module.css';
+const styles = importedStyles ?? {} as Record<string, string>;
 
 interface Props {
   onSendToTerminal: () => void;
