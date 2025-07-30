@@ -1,5 +1,8 @@
 import React from 'react';
-import styles from './home.module.css'; 
+import styles from './home.module.css';
+
+// Fallback in case CSS modules fail to load
+const classes = styles || {} as Record<string, string>;
 import TitleBar from './components/TitleBar';
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
@@ -10,9 +13,9 @@ export default function Home() {
   const { logs, handleSendFromTerminal, handleSendToTerminal } = useHome();
 
   return (
-    <div className={styles.wrapper}>
+    <div className={classes.wrapper}>
       <TitleBar />
-      <div className={styles.content}>
+      <div className={classes.content}>
         <LeftPanel
           onSendFromTerminal={handleSendFromTerminal}
           onSendToTerminal={handleSendToTerminal}
