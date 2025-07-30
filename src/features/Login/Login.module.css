@@ -6,15 +6,16 @@
 
  }
 
- .card {
-   max-width: 360px;
-   width: 100%;
-   padding: 14px;
-   border-radius: 8px !important;
-   background-color: 'red';
-   text-align: center;
-   
- }
+  .card {
+    max-width: 360px;
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px !important;
+    background-color: 'red';
+    text-align: center;
+    position: relative;
+
+  }
 
  .logo {
    height: 48px;
@@ -36,9 +37,17 @@
    text-align: center;
  }
 
- .dialogContent {
-   display: flex;
-   flex-direction: column;
-   gap: 16px;
+  .dialogContent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 
- }
+  }
+
+  .version {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    font-size: 12px;
+    color: #94a3b8;
+  }

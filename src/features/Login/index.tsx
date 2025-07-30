@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Box, Paper, Typography, useTheme } from '@mui/material';;
+import { Box, Paper, Typography, useTheme } from '@mui/material';
 import LoginForm from './components/LoginForm';
 import BSDialog from './components/BSDialog';
 import { SnackbarAlert } from '../../components/SnackbarAlert';
@@ -10,6 +10,14 @@ const styles = require('./Login.module.css');
 
 const Login: React.FC = () => {
   const theme = useTheme();
+  const version = React.useMemo(() => {
+    try {
+      const remote = window.require('@electron/remote');
+      return remote.app.getVersion();
+    } catch {
+      return '';
+    }
+  }, []);
   const {
     storeCode,
     storePass,
@@ -33,6 +41,7 @@ const Login: React.FC = () => {
       }}
     >
       <Paper className={styles.card} elevation={8}>
+        <span className={styles.version}>v{version}</span>
         <img src={Logo} alt="Logo" className={styles.logo} />
         <Typography variant="h6" className={styles.title}>
           Mağaza Girişi
