@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
-import Switch from '@mui/material/Switch';
+import IconButton from '@mui/material/IconButton';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { ColorModeContext } from '../../../App';
 const styles = require('../home.module.css');
 
@@ -22,11 +24,13 @@ export default function StatusBar() {
           <span className={styles.statusText}>Versiyon: V.{version}</span>
         </div>
         <button className={styles.linkButton}>📄<span>Kullanıcı Dokümanı</span></button>
-        <Switch
-          size="small"
-          checked={colorMode.mode === 'dark'}
-          onChange={colorMode.toggleColorMode}
-        />
+        <IconButton size="small" onClick={colorMode.toggleColorMode}>
+          {colorMode.mode === 'dark' ? (
+            <Brightness7Icon fontSize="small" />
+          ) : (
+            <Brightness4Icon fontSize="small" />
+          )}
+        </IconButton>
       </div>
       <div style={{ display: 'flex', gap: '8px' }}>
         <button className={styles.statusButton}>Ekranı Aç</button>

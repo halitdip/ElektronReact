@@ -1,6 +1,9 @@
 
 import React from 'react';
-import { Box, Paper, Typography, useTheme } from '@mui/material';
+import { Box, Paper, Typography, useTheme, IconButton } from '@mui/material';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { ColorModeContext } from '../../App';
 import LoginForm from './components/LoginForm';
 import BSDialog from './components/BSDialog';
 import { SnackbarAlert } from '../../components/SnackbarAlert';
@@ -10,6 +13,7 @@ const styles = require('./Login.module.css');
 
 const Login: React.FC = () => {
   const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
   const version = React.useMemo(() => {
     try {
       const remote = window.require('@electron/remote');
@@ -42,6 +46,17 @@ const Login: React.FC = () => {
     >
       <Paper className={styles.card} elevation={8}>
         <span className={styles.version}>v{version}</span>
+        <IconButton
+          size="small"
+          className={styles.themeToggle}
+          onClick={colorMode.toggleColorMode}
+        >
+          {colorMode.mode === 'dark' ? (
+            <Brightness7Icon fontSize="small" />
+          ) : (
+            <Brightness4Icon fontSize="small" />
+          )}
+        </IconButton>
         <img src={Logo} alt="Logo" className={styles.logo} />
         <Typography variant="h6" className={styles.title}>
           Mağaza Girişi
