@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './home.module.css'; 
+import styles from './home.module.css';
 import TitleBar from './components/TitleBar';
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
