@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from './home.module.css'; 
+import importedStyles from './home.module.css';
+const styles = importedStyles ?? {} as Record<string, string>;
 import TitleBar from './components/TitleBar';
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
