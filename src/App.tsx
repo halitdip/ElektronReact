@@ -54,7 +54,7 @@ export default function App() {
           '#root': { height: '100%', width: '100%' },
         }} />
         <LoadingOverlay open={loading} />
-        <HashRouter>
+        <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
             {isAuthenticated && <Sidebar />}
             <Routes>
