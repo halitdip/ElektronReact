@@ -1,6 +1,32 @@
 // src/theme/theme.ts
 import { createTheme } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface CustomColors {
+    headerBackground: string;
+    border: string;
+    shadow: string;
+    legendBoxBg: string;
+    gradient: string[];
+    wrapperBg: string;
+    textColor: string;
+    progressBarBg: string;
+    leftPanelBg: string;
+    logboxBg: string;
+    statusbarBg: string;
+    statusText: string;
+    linkColor: string;
+    statusButtonBg: string;
+    statusButtonText: string;
+  }
+  interface Theme {
+    customColors: CustomColors;
+  }
+  interface ThemeOptions {
+    customColors?: Partial<CustomColors>;
+  }
+}
+
 
 export const getTheme = (mode: 'light' | 'dark') =>
   createTheme({
@@ -27,9 +53,19 @@ export const getTheme = (mode: 'light' | 'dark') =>
         mode === 'dark'
           ? ['#0f3443', '#19324c', '#105e62', '#27ae60']
           : ['#67e8f9', '#b9ffb7', '#a8ff78', '#27ae60'],
+      wrapperBg: mode === 'dark' ? '#0f172a' : '#ffffff',
+      textColor: mode === 'dark' ? '#f1f5f9' : '#1e293b',
+      progressBarBg: mode === 'dark' ? '#1e293b' : '#e2e8f0',
+      leftPanelBg: mode === 'dark' ? '#1e293b' : '#f8fafc',
+      logboxBg: mode === 'dark' ? '#0f172a' : '#ffffff',
+      statusbarBg: mode === 'dark' ? '#1e293b' : '#e5e7eb',
+      statusText: mode === 'dark' ? '#cbd5e1' : '#475569',
+      linkColor: mode === 'dark' ? '#38bdf8' : '#2563eb',
+      statusButtonBg: mode === 'dark' ? '#334155' : '#e2e8f0',
+      statusButtonText: mode === 'dark' ? '#f1f5f9' : '#1e293b',
     },
     typography: {
       fontFamily: ['TTForsRegular', 'sans-serif'].join(','),
       button: { textTransform: 'none' },
     },
-  }) as any;
+  }) as unknown as import('@mui/material/styles').Theme;
