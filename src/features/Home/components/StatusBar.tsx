@@ -1,10 +1,6 @@
 import React from 'react';
-let styles: { [key: string]: string } = {};
-try {
-  styles = require('../home.module.css');
-} catch (err) {
-  console.error('Failed to load Home styles', err);
-}
+const styles = require('../home.module.css');
+
 
 export default function StatusBar() {
   return (

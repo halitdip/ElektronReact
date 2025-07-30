@@ -4,13 +4,7 @@ import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
 import StatusBar from './components/StatusBar';
 import { useHome } from './useHome';
-
-let styles: { [key: string]: string } = {};
-try {
-  styles = require('./home.module.css');
-} catch (err) {
-  console.error('Failed to load Home styles', err);
-}
+const styles = require('./home.module.css');
 
 export default function Home() {
   const { logs, handleSendFromTerminal, handleSendToTerminal } = useHome();
