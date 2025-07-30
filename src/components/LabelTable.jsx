@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   Table,
   TableHead,
@@ -7,51 +7,74 @@ import {
   TableBody,
   Button,
 } from '@mui/material';
+import { GetLabelDownload } from '../services/main/KioskServices'
+import usePdfDownloader from '@/hooks/usePdfDownloader';
+
 
 export default function LabelTable({ rows = [] }) {
-  const handleDownload = (row) => {
-    const blob = new Blob([JSON.stringify(row, null, 2)], {
-      type: 'application/json',
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `label-${row.id}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+
+  const { savePdf } = usePdfDownloader();
+
+  const handleDownload = async (id) => {
+    const response = await GetLabelDownload(id);
+    if (response.labelDownload.isError) {
+      alert("Etiket verileri alınamadı !");
+      return;
+    }
+    const base64 = response.labelDownload.data.base64;
+    const success = await savePdf(base64, `etiket-${id}.pdf`);
+    if (!success) {
+      alert('Dosya kayıt edilemedi.lütfen daha sonra tekrar deneyiniz..');
+    }
   };
 
   return (
     <Table size="small">
       <TableHead>
-        <TableRow>
-          <TableCell>ID</TableCell>
-          <TableCell>Etiket Adı</TableCell>
-          <TableCell>Eklenme Tarihi</TableCell>
-          <TableCell>Etiket Tipi</TableCell>
-          <TableCell>Fiyat Geçerlilik Gün</TableCell>
-          <TableCell>İndirildi</TableCell>
+        <TableRow
+          sx={{
+            '& > th': {
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }
+          }}
+        >
+          <TableCell>Etiket Türü</TableCell>
+          <TableCell>Oluşturulma Tarihi</TableCell>
+          <TableCell>Boyut</TableCell>
+          <TableCell>Fiyat Geçerlilik Başlangıç</TableCell>
+          <TableCell>Durum</TableCell>
           <TableCell>İndirilme Tarihi</TableCell>
           <TableCell />
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
-          <TableRow key={row.id}>
-            <TableCell>{row.id}</TableCell>
+        {rows.map((row, idx) => (
+          <TableRow
+            key={row.id}
+            sx={{
+              backgroundColor: idx % 2 === 0 ? '#fafafa' : '#f0f0f0',
+              '& > td': {
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }
+            }}
+          >
             <TableCell>{row.etiketAdi}</TableCell>
             <TableCell>{row.eklenmeTarihi}</TableCell>
             <TableCell>{row.etiketTipi}</TableCell>
             <TableCell>{row.fiyatGecerlilikGun}</TableCell>
-            <TableCell>{row.indirildi ? 'Evet' : 'Hayır'}</TableCell>
+            <TableCell sx={{ color: row.indirildi ? 'green' : 'red' }}>
+              {row.indirildi ? 'İndirildi' : 'İndirilmedi'}
+            </TableCell>
             <TableCell>{row.indirilmeTarihi}</TableCell>
             <TableCell>
               <Button
                 variant="contained"
                 size="small"
-                onClick={() => handleDownload(row)}
+                onClick={() => handleDownload(row.id)}
               >
                 İndir
               </Button>
@@ -60,5 +83,6 @@ export default function LabelTable({ rows = [] }) {
         ))}
       </TableBody>
     </Table>
+
   );
 }

@@ -1,6 +1,6 @@
 // services/main/AuthServices.js
 
-import { ApiHelper } from '@/services/extension/ApiHelper';
+import { ApiHelper } from '@/services/extension/ApiHelper'; 
 
 export const GetNewShortcuts = async (storeCode, code2) => {
   return ApiHelper([
@@ -22,6 +22,15 @@ export const GetNewShortcuts = async (storeCode, code2) => {
       security: 0,
       model: [],
     },
+    {
+      name: 'GetRevenue',
+      detail: 'Cirolar',
+      url: `api/Revenue/GetRevenue?storeCode=${code2}`,
+      type: 'get',
+      site: 'a101kiosk',
+      security: 0,
+      model: [],
+    }
   ]);
 };
 
@@ -37,4 +46,19 @@ export const GetLabelsWithLastDay = async (storeCode) => {
       model: [],
     }
   ]);
-}; 
+};
+
+export const GetLabelDownload = async (id) => {
+  return ApiHelper([
+    {
+      name: 'labelDownload',
+      detail: 'Etiket İndir',
+      url: `api/Label/GetLabelDownload?id=${id}`,
+      type: 'get',
+      site: 'a101kiosk',
+      security: 0,
+      model: [],
+    }
+  ]);
+};
+

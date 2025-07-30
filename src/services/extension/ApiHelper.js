@@ -6,9 +6,9 @@ import { startLoading, stopLoading } from './loadingService';
 // logoutFunction parametresini kaldırın ve getLogoutFunction'ı import edin 
 
 export const ApiHelper = async (requests) => { // logoutFunction parametresini kaldırdık
-  const loader = typeof requests[0].isLoading === 'boolean' ? requests[0].isLoading : true
-  if (loader)
-    startLoading();
+  /*   const loader = typeof requests[0].isLoading === 'boolean' ? requests[0].isLoading : true
+    if (loader)*/
+  startLoading();
 
   try {
     if (!Array.isArray(requests)) {
@@ -33,7 +33,7 @@ export const ApiHelper = async (requests) => { // logoutFunction parametresini k
             jwtToken
           );
 
-          if (apiResponse.isError) { 
+          if (apiResponse.isError) {
             return {
               [req.name]: {
                 isError: true,
@@ -73,7 +73,7 @@ export const ApiHelper = async (requests) => { // logoutFunction parametresini k
   } catch (error) {
     throw error;
   } finally {
-    if (loader)
-      stopLoading();
+    /*    if (loader) */
+    stopLoading();
   }
 };

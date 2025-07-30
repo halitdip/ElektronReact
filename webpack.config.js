@@ -12,35 +12,60 @@ module.exports = {
     publicPath: isProd ? './' : '/',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
   },
   module: {
     rules: [
+      // TypeScript
+      {
+        test: /\.(ts|tsx)$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      // JavaScript
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
+      // CSS Modules
+      {
+        test: /\.module\.css$/i,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]__[hash:base64:5]', // Geliştirici dostu className üretimi
+              },
+            },
+          },
+        ],
+      },
+      // Global CSS
+      {
+        test: /\.css$/i,
+        exclude: /\.module\.css$/i, // .module.css'leri dışarıda bırak
+        use: ['style-loader', 'css-loader'],
+      },
+      // Assets
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/[name][ext]'
-        }
+          filename: 'assets/[name][ext]',
+        },
       },
       {
         test: /\.(woff2?|eot|ttf|otf)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'fonts/[name][ext]'
-        }
-      },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+          filename: 'fonts/[name][ext]',
+        },
       },
     ],
   },

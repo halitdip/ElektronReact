@@ -1,32 +1,37 @@
-// main.js
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
+require('@electron/remote/main').initialize();
+const localShortcut = require('electron-localshortcut');
 
 function createWindow() {
   const win = new BrowserWindow({
-    kiosk: true,
+    width: 620,
+    height: 340,
+    kiosk: false,
+    fullscreen: false,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
     },
+    resizable: false
   });
+  require('@electron/remote/main').enable(win.webContents);
 
-  // Alt+F4 veya pencereyi kapatma girişimini engelle
+
   win.on('close', (event) => {
     event.preventDefault();
-    // Burada istersen log atabilir, uyarı gösterebilirsin
-    // Mesela: console.log("Kapatmak yasak!");
   });
 
-  if (!app.isPackaged) { 
+  if (!app.isPackaged) {
     const url = process.env.ELECTRON_START_URL || 'http://localhost:8080';
     win.loadURL(url);
-    win.webContents.openDevTools({ mode: 'detach' });  // incele kısmı
-  } else { 
+    win.webContents.openDevTools({ mode: 'detach' });
+  } else {
     const indexHtml = path.join(__dirname, 'dist', 'index.html');
     win.loadFile(indexHtml)
-      .catch(err => console.error('LoadFile Error:', err)); 
+      .catch(err => console.error('LoadFile Error:', err));
   }
 }
 

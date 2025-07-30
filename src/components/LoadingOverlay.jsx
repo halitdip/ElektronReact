@@ -7,7 +7,7 @@ export default function LoadingOverlay({ open }) {
       sx={{
         color: "#00a1cb",
         zIndex: (theme) => theme.zIndex.tooltip + 1,
-        backgroundColor: "rgba(255,255,255,0.5)",
+        backgroundColor: "rgba(0,0,0,0.5)",
       }}
       open={open}
     >
