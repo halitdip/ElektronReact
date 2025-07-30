@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import IconButton from '@mui/material/IconButton';
 import ReactLogo from '@/assets/img/a-101-logo.png';
 
-import CloseIcon from '@mui/icons-material/Close';
-import RemoveIcon from '@mui/icons-material/Minimize';
-import LogoutIcon from '@mui/icons-material/Logout';
+import CancelIcon from '@mui/icons-material/Cancel';
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '@/context/AuthContext';
 
@@ -15,7 +15,10 @@ export default function TopNav() {
   const handleClose = () => {
     const remote = window.require('@electron/remote');
     const win = remote.getCurrentWindow ? remote.getCurrentWindow() : remote.BrowserWindow.getFocusedWindow();
-    if (win) win.close();
+    if (win) {
+      win.removeAllListeners && win.removeAllListeners('close');
+      win.close();
+    }
   };
 
   const handleMinimize = () => {
@@ -31,7 +34,6 @@ export default function TopNav() {
 
   return (
     <div style={styles.wrapper}>
-      {/* SOL: Logo */}
       <div style={styles.left}>
         <IconButton size="small" disableRipple>
           <img
@@ -41,23 +43,21 @@ export default function TopNav() {
           />
         </IconButton>
       </div>
-
-      {/* SAĞ: Bilgi + İkonlar */}
+      <div style={{ color: 'white', fontSize: 12,marginLeft: 70 }}>
+        B5954 - Kışla Sancaktepe İstanbul
+      </div>
       <div style={styles.right}>
-        <div style={{ color: 'white', fontSize: 12 }}>
-          B5954 - Kışla Sancaktepe İstanbul
-        </div>
 
         <IconButton size="small" sx={{ color: 'white' }} title="Çıkış Yap" onClick={handleLogout}>
-          <LogoutIcon fontSize="small" />
+          <ExitToAppIcon fontSize="small" />
         </IconButton>
 
         <IconButton size="small" sx={{ color: 'white' }} title="Küçült" onClick={handleMinimize}>
-          <RemoveIcon fontSize="small" />
+          <IndeterminateCheckBoxIcon fontSize="small" />
         </IconButton>
 
         <IconButton size="small" sx={{ color: 'white' }} title="Kapat" onClick={handleClose}>
-          <CloseIcon fontSize="small" />
+          <CancelIcon fontSize="small" />
         </IconButton>
       </div>
     </div>
@@ -82,6 +82,6 @@ const styles = {
   right: {
     display: 'flex',
     alignItems: 'center',
-    gap: 10,
+    gap: 2,
   },
 };

@@ -11,11 +11,12 @@ export default function TitleBar() {
       <div
         className={styles.progressBarFill}
         style={{
+          width: 26 + '%',
           background: `linear-gradient(to right, ${theme.customColors.gradient.join(", ")})`,
         }}
       ></div>
       <div className={styles.titleBar}>
-        <div className={styles.title}>1.Sayım Aşaması</div>
+        <div className={styles.title}>1.Sayım Aşaması (%26)</div>
         <div style={{ marginRight: 5, cursor: 'pointer' }}>
           <RefreshIcon />
         </div>

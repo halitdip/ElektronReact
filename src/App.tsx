@@ -1,6 +1,6 @@
 // src/App.tsx
 import React, { useEffect, useState, useMemo, useContext } from 'react';
-import { ThemeProvider, useTheme, createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, GlobalStyles } from '@mui/material'; 
 import { getTheme } from './theme/theme';
 import Home from './features/Home';
@@ -9,8 +9,6 @@ import Sidebar from './components/Sidebar';
 import LoadingOverlay from './components/LoadingOverlay';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
-
-const STORAGE_KEY = 'mui_app_theme';
 
 export const ColorModeContext = React.createContext({
   mode: 'dark',
@@ -23,24 +21,14 @@ export default function App() {
   const [mode, setMode] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === 'light' || stored === 'dark') {
-      setMode(stored);
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setMode(prefersDark ? 'dark' : 'light');
-    }
+    setMode('dark');
   }, []);
 
   const colorMode = useMemo(
     () => ({
       mode,
       toggleColorMode: () => {
-        setMode(prev => {
-          const newMode = prev === 'light' ? 'dark' : 'light';
-          localStorage.setItem(STORAGE_KEY, newMode);
-          return newMode;
-        });
+        setMode(prev => (prev === 'light' ? 'dark' : 'light'));
       },
     }),
     [mode]
