@@ -2,8 +2,8 @@
 .wrapper {
   width: 620px;
   height: 100%;
-  background: linear-gradient(to bottom right, #0f172a, #1e293b);
-  color: white;
+  background: var(--wrapper-bg);
+  color: var(--text-color);
   font-family: sans-serif;
   overflow: hidden;
   position: relative;
@@ -32,7 +32,7 @@
 .title {
   font-size: 14px;
   font-weight: 500;
-  color: #fff;
+  color: var(--text-color);
 }
 
 .closeButton {
@@ -40,12 +40,12 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
-  color: #cbd5e1;
+  color: var(--status-text);
 }
 
 .progressBarBg {
   height: 28px;
-  background-color: #334155;
+  background-color: var(--progress-bar-bg);
   position: relative;
 }
 
@@ -63,7 +63,7 @@
 
 .leftPanel {
   width: 208px;
-  background-color: rgba(30, 41, 59, 0.5);
+  background-color: var(--left-panel-bg);
   border-right: 1px solid #475569;
   padding: 16px;
   display: flex;
@@ -109,7 +109,7 @@
 }
 
 .logBox {
-  background-color: rgba(15, 23, 42, 0.7);
+  background-color: var(--logbox-bg);
   border-radius: 8px;
   padding: 16px;
   height: 100%;
@@ -139,7 +139,7 @@
 
 .logMessage {
   font-size: 14px;
-  color: #e2e8f0;
+  color: var(--text-color);
 }
 
 .statusBar {
@@ -148,7 +148,7 @@
   left: 0;
   right: 0;
   height: 32px;
-  background-color: #1e293b;
+  background-color: var(--statusbar-bg);
   border-top: 1px solid #475569;
   display: flex;
   align-items: center;
@@ -165,7 +165,7 @@
 
 .statusText {
   font-size: 12px;
-  color: #cbd5e1;
+  color: var(--status-text);
 }
 
 .linkButton {
@@ -173,15 +173,15 @@
   align-items: center;
   gap: 4px;
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--link-color);
   background: transparent;
   border: none;
   cursor: pointer;
 }
 
 .statusButton {
-  background-color: #334155;
-  color: #e2e8f0;
+  background-color: var(--status-button-bg);
+  color: var(--status-button-text);
   padding: 4px 12px;
   border-radius: 4px;
   font-size: 12px;
