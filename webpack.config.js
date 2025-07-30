@@ -5,7 +5,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
   target: 'electron-renderer',
-  entry: './src/index.jsx',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'renderer.js',
