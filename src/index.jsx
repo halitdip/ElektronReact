@@ -7,6 +7,7 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Sidebar from './components/Sidebar';
 import LoadingOverlay from './components/LoadingOverlay';
+import ErrorBoundary from './components/ErrorBoundary';
 
 import theme from './theme';
 
@@ -56,7 +57,11 @@ function App() {
           }}>
             <Sidebar />
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={
+                <ErrorBoundary>
+                  <Home />
+                </ErrorBoundary>
+              } />
             </Routes>
 
           </div>

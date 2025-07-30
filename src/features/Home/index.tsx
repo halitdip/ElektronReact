@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './home.module.css'; 
 import TitleBar from './components/TitleBar';
 import LeftPanel from './components/LeftPanel';
 import RightPanel from './components/RightPanel';
 import StatusBar from './components/StatusBar';
 import { useHome } from './useHome';
+const styles = require('./home.module.css');
 
 export default function Home() {
   const { logs, handleSendFromTerminal, handleSendToTerminal } = useHome();

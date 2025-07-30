@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from '../home.module.css';
+const styles = require('../home.module.css');
+
 
 export default function StatusBar() {
   return (

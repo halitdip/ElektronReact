@@ -1,6 +1,7 @@
 import React from 'react';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import styles from '../home.module.css';
+const styles = require('../home.module.css');
+
 
 export default function TitleBar() {
   return (
