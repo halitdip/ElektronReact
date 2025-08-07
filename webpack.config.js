@@ -93,15 +93,6 @@ module.exports = {
     client: {
       logging: 'warn',
       overlay: false,
-    },
-    headers: {
-      'Content-Security-Policy': [
-        "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-        "style-src 'self' 'unsafe-inline'",
-        "img-src 'self' http://magaza.a101.local",
-        "connect-src 'self' ws://localhost:8080 http://localhost:8080 http://10.7.2.21:8039"
-      ].join('; ')
-    },
+    }
   },
 };

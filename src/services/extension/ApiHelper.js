@@ -1,6 +1,6 @@
 // src/services/extension/ApiHelper.js
 
-import UniterApiService from './HttpClientServices';
+import ApiService from './HttpClientServices';
 /* import AsyncStorage from '@react-native-async-storage/async-storage'; */
 import { startLoading, stopLoading } from './loadingService';
 // logoutFunction parametresini kaldırın ve getLogoutFunction'ı import edin 
@@ -24,7 +24,7 @@ export const ApiHelper = async (requests) => { // logoutFunction parametresini k
     const settled = await Promise.allSettled(
       requests.map(async (req) => {
         try {
-          const apiResponse = await UniterApiService(
+          const apiResponse = await ApiService(
             req.type,
             req.site,
             req.url,

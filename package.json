@@ -1,7 +1,7 @@
 {
   "name": "a101-kiosk",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "src/main/main.js",
   "scripts": {
     "react:start": "webpack serve --mode=development --hot",
     "build-renderer": "cross-env NODE_ENV=production webpack --mode=production",
@@ -54,6 +54,7 @@
     "files": [
       "dist/**/*",
       "main.js",
+      "src/main/main.js",
       "package.json"
     ],
     "icon": "a-101-logo.ico",
