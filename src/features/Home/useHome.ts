@@ -1,7 +1,7 @@
- import { useState } from 'react';
+import { useState } from 'react';
+const { ipcRenderer } = require('electron');
+import { copyPasteFile } from '../../hooks/useCopyPasteFile'
 
-
- 
 export function useHome() {
   const [logs, setLogs] = useState([
     { time: '14:29:56', message: 'Giriş İşlemleri Başarılı!', type: 'success' },
@@ -18,8 +18,19 @@ export function useHome() {
     setLogs(prev => [...prev, { time, message, type }]);
   };
 
-  const handleSendToTerminal = () => {
-    addLog('Sayım Verisi AI ve Terminale gönderildi', 'success');
+  const handleSendToTerminal = async () => {
+    try {
+
+      const source = 'C:/Terminal/Data/Template/SQLiteStoreTerminal.db';
+      const target = 'C:/Terminal/MultiInv/Data/SQLiteStoreTerminal.db';
+      const db = await copyPasteFile(source, target);
+      console.log(db)
+      addLog('Sayım Verisi AI ve Terminale gönderildi', 'success');
+
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
   const handleSendFromTerminal = () => {
