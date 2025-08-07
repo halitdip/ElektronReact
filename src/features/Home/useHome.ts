@@ -1,5 +1,4 @@
 import { useState } from 'react';
-const { ipcRenderer } = require('electron');
 import { copyPasteFile } from '../../hooks/useCopyPasteFile'
 
 export function useHome() {
@@ -23,10 +22,12 @@ export function useHome() {
 
       const source = 'C:/Terminal/Data/Template/SQLiteStoreTerminal.db';
       const target = 'C:/Terminal/MultiInv/Data/SQLiteStoreTerminal.db';
-      const db = await copyPasteFile(source, target);
-      console.log(db)
-      addLog('Sayım Verisi AI ve Terminale gönderildi', 'success');
-
+      const result = await copyPasteFile(source, target);
+      if (result?.success) {
+        console.log('DB başarıyla kopyalandı!')
+      } else {
+        console.error('Kopyalama başarısız:', result.message)
+      }
     } catch (error) {
       console.log(error)
     }
