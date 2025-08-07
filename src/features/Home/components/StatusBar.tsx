@@ -4,6 +4,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { ColorModeContext } from '../../../App';
 const styles = require('../home.module.css');
+import { startScrcpy, stopScrcpy } from '../../../hooks/useScrcpy';
 
 export default function StatusBar() {
   const colorMode = useContext(ColorModeContext);
@@ -26,9 +27,9 @@ export default function StatusBar() {
         <button className={styles.linkButton}>📄<span>Kullanıcı Dokümanı</span></button>
 
       </div>
-      <div style={{ display: 'flex', gap: '8px',justifyContent: 'flex-end', alignItems: 'center' }}>
-        <button className={styles.statusButton}>Ekranı Aç</button>
-        <button className={styles.statusButton}>Ekranı Kapat</button>
+      <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', alignItems: 'center' }}>
+        <button className={styles.statusButton} onClick={() => startScrcpy()}>Ekranı Aç</button>
+        <button className={styles.statusButton} onClick={() => stopScrcpy()}>Ekranı Kapat</button>
 
         <IconButton size="small" onClick={colorMode.toggleColorMode}>
           {colorMode.mode === 'dark' ? (

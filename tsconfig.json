@@ -24,5 +24,13 @@
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "src/hooks/usePdfDownloader.js",
+    "src/hooks/usePowerActions.js",
+    "src/services/extension/ApiHelper.js",
+    "src/services/extension/HttpClientServices.js",
+    "src/services/extension/loadingService.js",
+    "src/services/main/KioskServices.js"
   ]
 }

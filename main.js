@@ -1,7 +1,11 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-require('@electron/remote/main').initialize();
-const localShortcut = require('electron-localshortcut');
+require('@electron/remote/main').initialize(); 
+
+// geliştirme asamasında uyarıları devre dışı bırakma
+if (!app.isPackaged) {
+  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
+}
 
 function createWindow() {
   const win = new BrowserWindow({
