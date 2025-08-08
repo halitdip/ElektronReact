@@ -7,5 +7,7 @@ contextBridge.exposeInMainWorld('api', {
     getAppVersion: () => ipcRenderer.invoke('get-app-version'),
     copyPasteFile: (src, dest) => ipcRenderer.invoke('copy-paste-file', src, dest),
     minimizeWindow: () => ipcRenderer.invoke('window-minimize'),
-    closeWindow: () => ipcRenderer.invoke('window-close')
+    closeWindow: () => ipcRenderer.invoke('window-close'),
+    insertInventory_: (dbPath, items) => ipcRenderer.invoke('insert-inventory', dbPath, items)
+
 })

@@ -10,5 +10,7 @@ interface Window {
     copyPasteFile: (src: string, dest: string) => Promise<{ success: boolean; message?: string }>;
     minimizeWindow: () => Promise<void>;
     closeWindow: () => Promise<void>;
+    insertInventory: () => Promise<void>;
+
   };
 }
