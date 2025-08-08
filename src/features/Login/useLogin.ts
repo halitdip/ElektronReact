@@ -1,5 +1,5 @@
 
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { AlertColor } from '@mui/material';
@@ -9,6 +9,7 @@ interface UseLoginReturn {
   storePass: string;
   bsUser: string;
   bsPass: string;
+  version: string;
   openBs: boolean;
   snackbar: { open: boolean; message: string; severity: AlertColor };
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -25,6 +26,14 @@ const useLogin = (): UseLoginReturn => {
   const [form, setForm] = useState({ storeCode: 'admin', storePass: 'admin', bsUser: 'admin', bsPass: 'admin' });
   const [openBs, setOpenBs] = useState(false);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: AlertColor }>({ open: false, message: '', severity: 'error' });
+  const [version, setVersion] = useState('');
+
+  useEffect(() => {
+    window.api
+      .getAppVersion()
+      .then(res => setVersion(res.version))
+      .catch(() => setVersion(''));
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -54,11 +63,13 @@ const useLogin = (): UseLoginReturn => {
     bsPass: form.bsPass,
     openBs,
     snackbar,
+    version,
     handleChange,
     handleFirst,
     handleSecond,
     closeSnackbar,
-    closeDialog,
+    closeDialog
+
   };
 };
 

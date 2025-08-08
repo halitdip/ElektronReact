@@ -4,13 +4,13 @@ import axios from 'axios';
 
 // Burada domain bazlı base URL tanımları yapabilirsiniz. 
 const BASE_URLS = {
-    a101kiosk: 'http://10.7.2.21:8039/', 
+    a101: 'https://partialinvapitest.a101.com.tr/', 
     // eğer başka siteler varsa buraya ekleyin: : 192.168.1.105
     // örn: other: 'https://api.othersite.com/'
 };
 
 /**
- * UniterApiService:
+ * ApiService:
  *  - method: 'get' | 'post' | 'put' | 'delete' | vs.
  *  - site: 'kiosk' | diğer tanımlı anahtarlar
  *  - url: 'api/auth/login' gibi relative path
@@ -18,7 +18,7 @@ const BASE_URLS = {
  *  - security: 0 veya 1 → 1 ise Authorization header beklenir
  *  - token: eğer security = 1, burada JWT verirsiniz; null ise header eklenmez
  */
-export default async function UniterApiService(
+export default async function ApiService(
     method,
     site,
     url,

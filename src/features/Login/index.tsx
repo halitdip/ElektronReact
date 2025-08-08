@@ -14,14 +14,7 @@ const styles = require('./Login.module.css');
 const Login: React.FC = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
-  const version = React.useMemo(() => {
-    try {
-      const remote = window.require('@electron/remote');
-      return remote.app.getVersion();
-    } catch {
-      return '';
-    }
-  }, []);
+ 
   const {
     storeCode,
     storePass,
@@ -29,6 +22,7 @@ const Login: React.FC = () => {
     bsPass,
     openBs,
     snackbar,
+    version,
     handleChange,
     handleFirst,
     handleSecond,

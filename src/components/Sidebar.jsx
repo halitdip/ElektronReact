@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import IconButton from '@mui/material/IconButton';
 import ReactLogo from '@/assets/img/a-101-logo.png';
-
 import CancelIcon from '@mui/icons-material/Cancel';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -13,18 +12,11 @@ export default function TopNav() {
   const { logout } = useContext(AuthContext);
 
   const handleClose = () => {
-    const remote = window.require('@electron/remote');
-    const win = remote.getCurrentWindow ? remote.getCurrentWindow() : remote.BrowserWindow.getFocusedWindow();
-    if (win) {
-      win.removeAllListeners && win.removeAllListeners('close');
-      win.close();
-    }
+    window.api.closeWindow();
   };
 
   const handleMinimize = () => {
-    const remote = window.require('@electron/remote');
-    const win = remote.getCurrentWindow ? remote.getCurrentWindow() : remote.BrowserWindow.getFocusedWindow();
-    if (win) win.minimize();
+    window.api.minimizeWindow();
   };
 
   const handleLogout = () => {
@@ -43,19 +35,16 @@ export default function TopNav() {
           />
         </IconButton>
       </div>
-      <div style={{ color: 'white', fontSize: 12,marginLeft: 70 }}>
+      <div style={{ color: 'white', fontSize: 12, marginLeft: 70 }}>
         B5954 - Kışla Sancaktepe İstanbul
       </div>
       <div style={styles.right}>
-
         <IconButton size="small" sx={{ color: 'white' }} title="Çıkış Yap" onClick={handleLogout}>
           <ExitToAppIcon fontSize="small" />
         </IconButton>
-
         <IconButton size="small" sx={{ color: 'white' }} title="Küçült" onClick={handleMinimize}>
           <IndeterminateCheckBoxIcon fontSize="small" />
         </IconButton>
-
         <IconButton size="small" sx={{ color: 'white' }} title="Kapat" onClick={handleClose}>
           <CancelIcon fontSize="small" />
         </IconButton>

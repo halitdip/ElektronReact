@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { copyPasteFile } from '../../hooks/useCopyPasteFile'
+import { GetPartialInvProducts } from '../../services/main/TerminalServices'
+import { AuthContext } from '../../context/AuthContext';
 
 export function useHome() {
+  const { setLoading } = useContext(AuthContext);
   const [logs, setLogs] = useState([
     { time: '14:29:56', message: 'Giriş İşlemleri Başarılı!', type: 'success' },
     { time: '14:29:56', message: 'Sistem sayım verisi alımına uygun!', type: 'info' },
@@ -19,17 +22,23 @@ export function useHome() {
 
   const handleSendToTerminal = async () => {
     try {
-
+   /*    setLoading(true) */
       const source = 'C:/Terminal/Data/Template/SQLiteStoreTerminal.db';
       const target = 'C:/Terminal/MultiInv/Data/SQLiteStoreTerminal.db';
       const result = await copyPasteFile(source, target);
       if (result?.success) {
+
+        const getData = await GetPartialInvProducts('F240');
+        console.log(getData);
         console.log('DB başarıyla kopyalandı!')
       } else {
         console.error('Kopyalama başarısız:', result.message)
       }
+/*       setLoading(false) */
     } catch (error) {
       console.log(error)
+    } finally {
+/*       setLoading(false) */
     }
 
   };

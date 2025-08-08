@@ -1,7 +1,7 @@
 // src/App.tsx
 import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, GlobalStyles } from '@mui/material'; 
+import { CssBaseline, GlobalStyles } from '@mui/material';
 import { getTheme } from './theme/theme';
 import Home from './features/Home';
 import Login from './features/Login';
@@ -12,12 +12,11 @@ import { AuthContext } from './context/AuthContext';
 
 export const ColorModeContext = React.createContext({
   mode: 'dark',
-  toggleColorMode: () => {},
+  toggleColorMode: () => { },
 });
 
 export default function App() {
-  const { isAuthenticated } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const { isAuthenticated, loading } = useContext(AuthContext); 
   const [mode, setMode] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {

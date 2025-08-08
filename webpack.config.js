@@ -4,7 +4,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  target: 'electron-renderer',
+  target: 'web',
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -15,6 +15,9 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
+    },
+    fallback: {
+      events: require.resolve('events/')
     },
   },
   module: {
@@ -90,15 +93,6 @@ module.exports = {
     client: {
       logging: 'warn',
       overlay: false,
-    },
-    headers: {
-      'Content-Security-Policy': [
-        "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-        "style-src 'self' 'unsafe-inline'",
-        "img-src 'self' http://magaza.a101.local",
-        "connect-src 'self' ws://localhost:8080 http://localhost:8080 http://10.7.2.21:8039"
-      ].join('; ')
-    },
+    }
   },
 };
