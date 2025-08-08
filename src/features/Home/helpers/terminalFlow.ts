@@ -10,7 +10,7 @@ const VersionCheck = async (addLog) => {
         console.log(terminalVersion, appVersion)
         addLog(`Versiyon kontrolü Başlatıldı. terminal V : ${terminalVersion.version},App V : ${appVersion.version}`, 'info');
 
-        return sendStatus(false, `Versiyonlar Uyumsuz.`)
+        return sendStatus(true, `Versiyonlar Uyumsuz.`)
     } catch (e: any) {
         addLog(`Versiyon kontrolü yapılamadı: ${e?.message || e}`, 'info');
         return sendStatus(false, `Versiyon/Meta kontrolü yapılamadı: ${e?.message || e}`)

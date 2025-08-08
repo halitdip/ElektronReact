@@ -1,5 +1,5 @@
 // src/main/main.js
-const { app } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const { registerScrcpyHandlers } = require('./handlers/scrcpy');
 const { registerFileHandlers } = require('./handlers/file');
 const { registerVersionHandler } = require('./handlers/version');
