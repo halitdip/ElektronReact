@@ -5,9 +5,11 @@ import React, {
   ReactNode,
   FC,
   useEffect,
+  useContext,
 } from 'react';
 import { registerLoadingCallbacks } from '../services/extension/loadingService';
 import { loginService } from '../services/main/AuthServices';
+import { LogContext } from './LogContext';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
@@ -39,6 +41,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [loading, setLoadingState] = useState<boolean>(false);
   const [session, setSession] = useState<any>(null);
+  const { clearLogs } = useContext(LogContext);
  
   useEffect(() => {
     registerLoadingCallbacks(
@@ -95,6 +98,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     setIsAuthenticated(false);
     setSession(null);
+    clearLogs();
     try {
       localStorage.removeItem(SESSION_KEY);
     } catch {}
