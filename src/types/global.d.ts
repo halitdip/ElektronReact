@@ -7,6 +7,7 @@ interface Window {
     startScrcpy: (deviceId?: string) => Promise<{ success: boolean; message?: string }>;
     stopScrcpy: () => Promise<{ success: boolean; message?: string }>;
     getAppVersion: () => Promise<{ version: string }>;
+    getTerminalVersion: () => Promise<{ version: string }>;
     copyPasteFile: (src: string, dest: string) => Promise<{ success: boolean; message?: string }>;
     minimizeWindow: () => Promise<void>;
     closeWindow: () => Promise<void>;

@@ -12,8 +12,9 @@ export function useHome() {
   const handleSendToTerminal = async () => {
 
     try {
+      setLoading(true)
       // todo : storeterminalInv -> mainwindow.xaml.cs
-      //İşlem sırasında kullanılan tüm terminallerdeki veriler sıfırlanacaktır. Onaylıyor musunuz?  bu alerta evet derse devam
+      //İşlem sırasında kullanılan tüm terminallerdeki veriler sıfırlanacaktır. Onaylıyor musunuz?  bu alerta evet derse devam (yapıldı)
       // bs envanter uygulamasının ve android apk nın versiyonu kontrol edilecek. servisten 246 
 
       // adb de birden fazla cihaz bağlıysa uyarı ver ve devam etme. 270. satır
@@ -23,10 +24,11 @@ export function useHome() {
       // InventoryType ve InventorySubType i servisten al globale yaz diğer apilere göndercez 299
 
 
-      const canContinue = await preflight(addLog); 
+      const canContinue = await preflight(addLog);
+      console.log(canContinue);
       if (!canContinue.status) {
         addLog(canContinue.message, 'error');
-        return;  
+        return;
       }
       setLoading(true)
       const source = 'C:/Terminal/Data/Template/SQLiteStoreTerminal.db';
