@@ -54,8 +54,6 @@
       "**/*.node"
     ],
     "npmRebuild": false,
-    "npmPrune": true,
-    "compression": "maximum",
     "appId": "com.a101.electroninv",
     "productName": "ElectronInv",
     "directories": {
@@ -64,12 +62,7 @@
     "files": [
       "dist/**/*",
       "src/main/**/*",
-      "package.json",
-      "!**/*.map",
-      "!**/node_modules/*/{test,tests,__tests__,example,examples,docs}/**",
-      "!**/node_modules/*/{README.md,README,readme.md,CHANGELOG.md}",
-      "!src/main/**/*.ts",
-      "!src/main/**/*.tsx"
+      "package.json"
     ],
     "icon": "a-101-logo.ico",
     "win": {
