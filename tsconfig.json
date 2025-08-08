@@ -25,9 +25,7 @@
   "include": [
     "src"
   ],
-  "exclude": [
-    "src/hooks/usePdfDownloader.js",
-    "src/hooks/usePowerActions.js",
+  "exclude": [ 
     "src/services/extension/ApiHelper.js",
     "src/services/extension/HttpClientServices.js",
     "src/services/extension/loadingService.js",

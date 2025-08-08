@@ -1,33 +1,20 @@
-import { useState, useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { copyPasteFile } from '../../hooks/useFiles'
 import { GetPartialInvProducts } from '../../services/main/TerminalServices'
 import { AuthContext } from '../../context/AuthContext';
 import { insertInventoryHook } from '../../hooks/useDb'
-import { useSession } from '../../hooks/useSession';
 import { preflight } from './helpers/terminalFlow'
+import { useLogs } from '../../context/LogContext';
 export function useHome() {
   const { setLoading } = useContext(AuthContext);
-  const [logs, setLogs] = useState([
-    { time: '14:29:56', message: 'Giriş İşlemleri Başarılı!', type: 'success' },
-    { time: '14:29:56', message: 'Sistem sayım verisi alımına uygun!', type: 'info' },
-  ]);
-
-
-  const addLog = (message: string, type: 'success' | 'info' | 'error' = 'info') => {
-    const now = new Date();
-    const time = now.toLocaleTimeString('tr-TR', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    });
-    setLogs(prev => [{ time, message, type }, ...prev].slice(0, 100));
-  };
+  const { logs, addLog } = useLogs();
 
   const handleSendToTerminal = async () => {
 
     try {
+      setLoading(true)
       // todo : storeterminalInv -> mainwindow.xaml.cs
-      //İşlem sırasında kullanılan tüm terminallerdeki veriler sıfırlanacaktır. Onaylıyor musunuz?  bu alerta evet derse devam  ok.
+      //İşlem sırasında kullanılan tüm terminallerdeki veriler sıfırlanacaktır. Onaylıyor musunuz?  bu alerta evet derse devam (yapıldı)
       // bs envanter uygulamasının ve android apk nın versiyonu kontrol edilecek. servisten 246 
 
       // adb de birden fazla cihaz bağlıysa uyarı ver ve devam etme. 270. satır
@@ -37,10 +24,11 @@ export function useHome() {
       // InventoryType ve InventorySubType i servisten al globale yaz diğer apilere göndercez 299
 
 
-      const canContinue = await preflight(addLog); 
+      const canContinue = await preflight(addLog);
+      console.log(canContinue);
       if (!canContinue.status) {
         addLog(canContinue.message, 'error');
-        return;  
+        return;
       }
       setLoading(true)
       const source = 'C:/Terminal/Data/Template/SQLiteStoreTerminal.db';
@@ -82,7 +70,6 @@ export function useHome() {
 
   return {
     logs,
-    addLog,
     handleSendToTerminal,
     handleSendFromTerminal,
   };

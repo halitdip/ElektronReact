@@ -26,7 +26,6 @@ export default function LeftPanel({ onSendToTerminal, onSendFromTerminal }: Prop
 
   const handleConfirmAndSend = async () => {
     handleCloseConfirm();
-    // kontrol ve kopyalama + veri alma akışını başlat
     onSendToTerminal();
   };
 
@@ -56,7 +55,7 @@ export default function LeftPanel({ onSendToTerminal, onSendFromTerminal }: Prop
         <DialogTitle>İşlem Onayı</DialogTitle>
         <DialogContent>
           <Typography variant="body2" sx={{ mt: 1 }}>
-            Bu işlem sırasında <b>kullanılan tüm terminallerdeki veriler sıfırlanacaktır</b>.
+            Bu işlem sırasında <b>Tüm  veriler sıfırlanacaktır</b>.
             Devam etmek istediğinize emin misiniz?
           </Typography>
         </DialogContent>
