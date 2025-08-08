@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { AlertColor } from '@mui/material';
-
+import { getVersionHook } from '../../hooks/useVersion'
 interface UseLoginReturn {
   storeCode: string;
   storePass: string;
@@ -21,19 +21,20 @@ interface UseLoginReturn {
 
 const useLogin = (): UseLoginReturn => {
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
-
-  const [form, setForm] = useState({ storeCode: 'admin', storePass: 'admin', bsUser: 'admin', bsPass: 'admin' });
+  const { login, checkLogin } = useContext(AuthContext);
+  const [form, setForm] = useState({ storeCode: 'F240', storePass: '206067ri', bsUser: 'halit.dip', bsPass: 'Vuejs123.!' });
   const [openBs, setOpenBs] = useState(false);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: AlertColor }>({ open: false, message: '', severity: 'error' });
   const [version, setVersion] = useState('');
 
   useEffect(() => {
-    window.api
-      .getAppVersion()
-      .then(res => setVersion(res.version))
-      .catch(() => setVersion(''));
+    getVersion()
   }, []);
+
+  const getVersion = async () => {
+    const versions = await getVersionHook();
+    setVersion(versions.version)
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -41,16 +42,29 @@ const useLogin = (): UseLoginReturn => {
 
   const showError = (message: string) => setSnackbar({ open: true, message, severity: 'error' });
 
-  const handleFirst = () => {
-    if (form.storeCode === 'admin' && form.storePass === 'admin') setOpenBs(true);
-    else showError('Mağaza kodu veya şifre yanlış!');
+  const handleFirst = async () => {
+    const model = {
+      "userName": form.storeCode,
+      "password": form.storePass,
+      "loginType": 4,
+      "storeCode": form.storeCode
+    }
+    const check = await checkLogin(model);
+    console.log(check)
+    if (check?.status) {
+      setOpenBs(true);
+    } else
+      showError(check?.message || 'Lütfen daha sonra tekrar deneyiniz..');
   };
 
-  const handleSecond = () => {
-    if (form.bsUser === 'admin' && form.bsPass === 'admin') {
-      login();
-      navigate('/');
-    } else showError('BS kullanıcı adı veya şifre yanlış!');
+  const handleSecond = async () => {
+    const model = {
+      "userName": form.bsUser,
+      "password": form.bsPass,
+      "loginType": 2,
+      "storeCode": form.storeCode
+    }
+    await login(model);
   };
 
   const closeSnackbar = () => setSnackbar(s => ({ ...s, open: false }));

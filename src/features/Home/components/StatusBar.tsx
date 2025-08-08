@@ -4,20 +4,24 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { ColorModeContext } from '../../../App';
 import { startScrcpy, stopScrcpy } from '../../../hooks/useScrcpy';
+import { getVersionHook } from '../../../hooks/useVersion'
+
 const styles = require('../home.module.css');
 
 export default function StatusBar() {
   const colorMode = useContext(ColorModeContext);
   const [version, setVersion] = useState<string>('');
 
-  // Versiyonu IPC ile al
+
+
   useEffect(() => {
-    window.api
-      .getAppVersion()
-      .then(res => setVersion(res.version))
-      .catch(() => setVersion(''));
+    getVersion()
   }, []);
 
+  const getVersion = async () => {
+    const versions = await getVersionHook();
+    setVersion(versions.version)
+  }
   return (
     <div className={styles.statusBar}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>

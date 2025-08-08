@@ -8,6 +8,6 @@ contextBridge.exposeInMainWorld('api', {
     copyPasteFile: (src, dest) => ipcRenderer.invoke('copy-paste-file', src, dest),
     minimizeWindow: () => ipcRenderer.invoke('window-minimize'),
     closeWindow: () => ipcRenderer.invoke('window-close'),
-    insertInventory_: (dbPath, items) => ipcRenderer.invoke('insert-inventory', dbPath, items)
+    insertInventoryTable: (dbPath, items) => ipcRenderer.invoke('insert-inventory', dbPath, items)
 
 })

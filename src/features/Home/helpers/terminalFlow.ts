@@ -1,0 +1,20 @@
+const sendStatus = (status, message) => {
+    return { status: status, message: message };
+}
+
+const VersionCheck = (addLog) => {
+    try {
+        return sendStatus(false, `Versiyonlar Uyumsuz.`)
+    } catch (e: any) {
+        addLog(`Versiyon kontrolü yapılamadı: ${e?.message || e}`, 'info');
+        return sendStatus(false, `Versiyon/Meta kontrolü yapılamadı: ${e?.message || e}`)
+    }
+
+}
+export const preflight = async (addLog): Promise<{ status: boolean; message: string }> => {
+
+    return VersionCheck(addLog);
+    
+    addLog('Ön kontroller başarılı.', 'success');
+    return sendStatus(true, 'Kontroller başarılı. İşleme devam ediliyor…')
+};

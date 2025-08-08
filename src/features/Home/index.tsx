@@ -26,7 +26,7 @@ export default function Home() {
 
   return (
     <div className={styles.wrapper} style={cssVars}>
-      <TitleBar />
+      <TitleBar /> 
       <div className={styles.content}>
         <LeftPanel
           onSendFromTerminal={handleSendFromTerminal}
