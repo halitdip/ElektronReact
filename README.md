@@ -13,6 +13,6 @@ npm install
 npm start
 ```
 
-Geliştirme sürecinde `npm run start:dev` komutu kullanılabilir.
+Geliştirme sürecinde ilk çalıştırmada `npx electron-rebuild` sonra`npm run start:dev` komutu kullanılabilir.
 Console mesajlarini azaltmak icin `DEBUG=1 npm run start:dev` komutu ile
 gelistirme araclari acilabilir.
