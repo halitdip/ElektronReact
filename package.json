@@ -8,8 +8,6 @@
     "start:dev": "concurrently -k --handle-input \"npm run react:start\" \"wait-on http://localhost:8080 && cross-env ELECTRON_START_URL=http://localhost:8080 electron .\"",
     "start": "npm run build-renderer && electron .",
     "rebuild:native": "npx @electron/rebuild -f -w sqlite3",
-    "dist:windows": "npm run build-renderer && npm run rebuild:native && electron-builder --win",
-    "dist:linux": "npm run build-renderer && npm run rebuild:native && electron-builder --linux",
     "dist": "npm run build-renderer && npm run rebuild:native && electron-builder",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -55,12 +53,18 @@
     "appId": "com.a101.electroninv",
     "productName": "ElectronInv",
     "directories": {
-      "buildResources": "src/assets/img"
+      "buildResources": "src/assets/img",
+      "output": "release"
     },
+    "artifactName": "${productName}-${version}-Setup.${ext}",
     "files": [
-      "dist/**/*",
+      "dist/renderer/**/*",
       "src/main/**/*",
-      "package.json"
+      "package.json",
+      "!**/*.map",
+      "!**/*.LICENSE.txt",
+      "!dist/win*/**",
+      "!dist/linux*/**"
     ],
     "icon": "a-101-logo.ico",
     "win": {
@@ -69,18 +73,6 @@
       ],
       "icon": "a-101-logo.ico"
     },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ],
-      "icon": "a-101-logo.png",
-      "category": "Utility"
-    },
-    "electronLanguages": [
-      "en-US",
-      "tr"
-    ],
     "nsis": {
       "oneClick": false,
       "perMachine": false,
@@ -89,6 +81,10 @@
       "installerIcon": "a-101-logo.ico",
       "uninstallerIcon": "a-101-logo.ico",
       "installerHeaderIcon": "a-101-logo.ico"
-    }
+    },
+    "electronLanguages": [
+      "en-US",
+      "tr"
+    ]
   }
 }
