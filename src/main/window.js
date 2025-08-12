@@ -19,11 +19,11 @@ function createWindow() {
   win.on('close', e => e.preventDefault());
 
   const isDev = !app.isPackaged;
-
+  win.webContents.openDevTools({ mode: 'detach' });
   if (isDev) {
     const url = process.env.ELECTRON_START_URL || 'http://localhost:8080';
     win.loadURL(url);
-    // win.webContents.openDevTools({ mode: 'detach' });
+    win.webContents.openDevTools({ mode: 'detach' });
   } else {
     // Paketli uygulamada dist, resources klasörünün yanındaki app.asar içindedir.
     const indexFile = path.join(process.resourcesPath, 'app.asar', 'dist', 'index.html');
