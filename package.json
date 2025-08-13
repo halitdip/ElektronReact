@@ -5,12 +5,13 @@
   "scripts": {
     "react:start": "webpack serve --mode=development --hot",
     "build-renderer": "cross-env NODE_ENV=production webpack --mode=production",
-    "start:dev": "concurrently -k --handle-input \"npm run react:start\" \"wait-on http://localhost:8080 && cross-env ELECTRON_START_URL=http://localhost:8080 electron .\"",
+    "start:dev": "concurrently -k --handle-input \"npm run react:start\" \"wait-on http://localhost:8080 && npm run predev:rebuild && cross-env ELECTRON_START_URL=http://localhost:8080 electron .\"",
     "start": "npm run build-renderer && electron .",
+    "clean:sqlite": "node -e \"try{require('fs').rmSync('node_modules/sqlite3/lib/binding',{recursive:true,force:true});require('fs').rmSync('node_modules/sqlite3/build',{recursive:true,force:true});}catch(e){};console.log('cleaned sqlite bindings');\"",
     "rebuild:native": "npx @electron/rebuild -f -w sqlite3",
+    "predev:rebuild": "npm run clean:sqlite && npm run rebuild:native",
     "dist": "npm run build-renderer && npm run rebuild:native && electron-builder",
-    "postinstall": "electron-builder install-app-deps",
-    "prestart:dev": "npm run rebuild:native"
+    "postinstall": "node -e \"console.log('skip postinstall: no native rebuild on npm i')\""
   },
   "dependencies": {
     "sqlite3": "^5.1.7"
@@ -51,6 +52,7 @@
       "**/*.node"
     ],
     "npmRebuild": false,
+    "buildDependenciesFromSource": false,
     "appId": "com.a101.electroninv",
     "productName": "ElectronInv",
     "directories": {
