@@ -9,7 +9,8 @@
     "start": "npm run build-renderer && electron .",
     "rebuild:native": "npx @electron/rebuild -f -w sqlite3",
     "dist": "npm run build-renderer && npm run rebuild:native && electron-builder",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "prestart:dev": "npm run rebuild:native"
   },
   "dependencies": {
     "sqlite3": "^5.1.7"
