@@ -7,7 +7,7 @@ module.exports = {
   target: 'web',
   entry: './src/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/renderer'),
     filename: 'renderer.js',
     publicPath: isProd ? './' : '/',
   },
@@ -16,9 +16,7 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
-    fallback: {
-      events: require.resolve('events/')
-    },
+    fallback: {},
   },
   module: {
     rules: [

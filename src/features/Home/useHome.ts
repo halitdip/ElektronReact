@@ -37,6 +37,7 @@ export function useHome() {
       if (result?.success) {
 
         const getData = await GetPartialInvProducts('F240');
+        console.log(getData)
         if (!getData?.GetPartialInvProducts?.isError) {
           addLog('Veri başarıyla Alındı !', 'success');
 
