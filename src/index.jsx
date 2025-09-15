@@ -5,14 +5,14 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import CssBaseline from '@mui/material/CssBaseline';
-
-import theme from './theme';
-import Home from './pages/Home';
-import About from './pages/About';
-import Info from './pages/Info';
-import Login from './pages/auth/login';
 import Sidebar from './components/Sidebar';
 import LoadingOverlay from './components/LoadingOverlay';
+
+import theme from './theme';
+
+import Home from './features/Home/';
+import Login from './features/Login/';
+
 import { useState, useEffect } from 'react';
 import { registerLoadingSetter } from './services/extension/loadingService';
 
@@ -55,18 +55,10 @@ function App() {
             height: '100%'
           }}>
             <Sidebar />
-            <div style={{
-              flex: 1,
-              backgroundColor: '#f5f5f5',
-              overflow:'hidden',
-              height: '100%'
-            }}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/info" element={<Info />} />
-              </Routes>
-            </div>
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+
           </div>
         ) : (
           <Routes>

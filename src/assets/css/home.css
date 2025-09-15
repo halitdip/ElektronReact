@@ -23,7 +23,7 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: white; 
+    background: white;
     position: relative;
 }
 
@@ -36,7 +36,7 @@ body {
     top: 0;
     transform-origin: top left;
     /* transform: JS tarafından eklenecek! */
-    
+
     /* NEW: Make kiosk-root a flex container */
     display: flex;
     flex-direction: column;
@@ -51,8 +51,10 @@ body {
     padding: 0 20px;
     font-size: 1.4rem;
     border-bottom: 2px solid #0079c2;
-    background: #ffffff; /* Added background for visibility if re-enabled */
-    flex-shrink: 0; /* Header'ın küçülmesini engelle */
+    background: #ffffff;
+    /* Added background for visibility if re-enabled */
+    flex-shrink: 0;
+    /* Header'ın küçülmesini engelle */
 }
 
 .logo {
@@ -77,8 +79,10 @@ body {
 /* Ana içerik */
 .kiosk-main {
     display: flex;
-    flex: 1; /* Ana içeriğin tüm boş alanı doldurmasını sağla */
-    min-height: 0; /* Alt bölümlerin taşmaması için */
+    flex: 1;
+    /* Ana içeriğin tüm boş alanı doldurmasını sağla */
+    min-height: 0;
+    /* Alt bölümlerin taşmaması için */
     background-color: white;
     width: 100%;
 }
@@ -86,11 +90,13 @@ body {
 /* Sol ana panel */
 .main-left {
     flex: 2;
-    padding: 30px; /* shorthand for 30px 30px 30px 30px */
+    padding: 30px;
+    /* shorthand for 30px 30px 30px 30px */
     display: flex;
     flex-direction: column;
     gap: 30px;
-    min-height: 0; /* Shortcuts alanı için */
+    min-height: 0;
+    /* Shortcuts alanı için */
 }
 
 .banner {
@@ -103,22 +109,23 @@ body {
     padding: 0 60px;
     font-size: 1.5rem;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
-    flex-shrink: 0; /* Banner'ın küçülmesini engelle */
+    flex-shrink: 0;
+    /* Banner'ın küçülmesini engelle */
 }
 
 .banner-arrow {
     position: absolute;
-    top: 50%;
+    top: 53%;
     transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.18);
     border: none;
-    color: #fff;
-    font-size: 2rem;
+    color: #fff; 
     cursor: pointer;
     width: 44px;
     height: 44px;
     border-radius: 50%;
     z-index: 2;
+    font-size: 1.5rem;
 }
 
 .banner-arrow.left {
@@ -127,6 +134,7 @@ body {
 
 .banner-arrow.right {
     right: 14px;
+    color: 'red !important';
 }
 
 .banner-content {
@@ -146,12 +154,12 @@ body {
 /* Kısayollar */
 .shortcuts {
     display: grid;
-    overflow-y: auto; /* İçerik taşarsa kaydırma çubuğu çıksın */
+    overflow-y: auto;
     overflow-x: hidden;
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
-    flex: 1; /* Shortcuts alanının mevcut alanı doldurmasını sağla */
-    min-height: 0; /* Taşma olursa kaydırma */
+    flex: 1;
+    min-height: 0;
 }
 
 .shortcut-card {
@@ -166,7 +174,7 @@ body {
     font-size: 1.25rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: transform 0.1s;
-    flex-direction: column; /* İkon ve metin alt alta gelsin */
+    flex-direction: column;
 }
 
 .shortcut-card:hover {
@@ -176,11 +184,11 @@ body {
 /* Sağ panel */
 .main-right {
     flex: 1;
-    padding: 30px 30px 30px 0; /* Sağda boşluk bırakma */
+    padding: 30px 30px 30px 0;
     display: flex;
     flex-direction: column;
     gap: 18px;
-    min-height: 0; /* Duyuru alanı için */
+    min-height: 0;
 }
 
 .ann-header {
@@ -190,15 +198,15 @@ body {
     border-radius: 12px;
     font-size: 1.12rem;
     font-weight: bold;
-    flex-shrink: 0; /* Başlık küçülmesin */
+    flex-shrink: 0;
 }
 
 .announcements {
     background: #fff;
     border-radius: 12px;
     padding: 16px;
-    flex: 1; /* Duyurular alanının mevcut alanı doldurmasını sağla */
-    overflow-y: auto; /* Duyurular taşarsa kaydırma çubuğu çıksın */
+    flex: 1;
+    overflow-y: auto;
 }
 
 .announcement {
@@ -222,7 +230,7 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    flex-shrink: 0; /* Küçülmesini engelle */
+    flex-shrink: 0;
 }
 
 .ann-text {
@@ -241,19 +249,19 @@ body {
     padding: 16px;
     font-size: 1rem;
     margin-top: 10px;
-    flex-shrink: 0; /* Ciro panelinin küçülmesini engelle */
+    flex-shrink: 0
 }
 
 /* Alt Dock */
-.kiosk-footer { 
+.kiosk-footer {
     background: #fff;
     border-top: 2px solid #0079c2;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 60px; 
-    height: 90px; /* Footer'a sabit bir yükseklik veriyoruz */
-    flex-shrink: 0; /* Footer'ın küçülmesini engelle */
+    gap: 60px;
+    height: 90px;
+    flex-shrink: 0;
 }
 
 .dock-btn {
